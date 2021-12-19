@@ -120,7 +120,6 @@ async def checkForTime(member : discord.user):
         diffY = int(now.split("-")[0]) - int(userTime.split("-")[0])
         diffM = int(now.split("-")[1]) - int(userTime.split("-")[1])
         diffD = int(now.split("-")[2]) - int(userTime.split("-")[2])
-        print(diffY,diffM,diffD)
         isNewYear = int(userTime.split("-")[1]) == 12 and int(userTime.split("-")[2]) > 29 and diffY == 1 and int(now.split("-")[2]) < 3 and int(now.split("-")[0]) == 1
         isNewMonth = diffM = 1 and int(userTime.split("-")[0]) == (28 or 29 or 30 or 31)
         if not isNewYear and not isNewMonth and (diffY !=0 or diffM !=0 or diffD > 2):

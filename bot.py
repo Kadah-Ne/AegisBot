@@ -1,3 +1,5 @@
+#Importation des librairies néccessaires
+
 from inspect import getcallargs
 import discord
 from discord import guild
@@ -7,21 +9,57 @@ from dotenv import load_dotenv
 import os
 from discord.utils import get
 import time
-from datetime import datetime, datetime
+from datetime import datetime, datetime, date
 from discord.ext import tasks
+
+
+#Initialisation des variables Globales
+
+############ RECUPERATION DES INFOS DU FICHER CONFIG ###################### 
+load_dotenv(dotenv_path="config")
+GUILD = int(os.getenv("GUILD")) #Server discord par defaut
+ARRIVAL = int(os.getenv("ARRIVALCHANNEL")) #Channel textuel d'arrivee par defaut
+PREFIX = (os.getenv("DEFAULTPREFIX")) #Prefix du bot par defaut
+TOKEN = str(os.getenv("TOKENP1") + os.getenv("TOKENP2"))
+###########################################################################
 
 listeEvents=[]
 client = discord.Client()
 intents = discord.Intents.all()
-load_dotenv(dotenv_path="config")
-bot = commands.Bot(command_prefix='&',intents=intents)
-GUILD = int(os.getenv("GUILD"))
-ARRIVAL = int(os.getenv("ARRIVALCHANNEL"))
+
+bot = commands.Bot(command_prefix=PREFIX,intents=intents)
+
 
 @bot.event
 async def on_ready():
-    print("ça tourne")
+    print("Aegis is up and running")
+    writeLogs("Aegis a redemarre")
+    await manageRole()
     await checkEveryone.start()
+    
+
+def writeLogs(message : str):
+    Horodatage = "["+str(datetime.now()).split(".")[0]+"]"
+    logname = "Log-"+str(date.today())+".txt"
+    log = open(f"Logs/{logname}","a")
+    log.write(Horodatage+" "+message+"\n")
+    log.close()
+
+@bot.command (name = "Prefix", aliases = ["prefix","p","P"])
+@commands.has_role('Staff')
+async def pref(ctx,NEWPREFIX : str):
+    f = open("config","r")
+    lines = f.readlines()
+    f.close()
+    f = open("config","w")
+    for line in lines:
+        if "DEFAULTPREFIX=" not in line:
+            f.write(line)
+    f.write("DEFAULTPREFIX="+NEWPREFIX)
+
+    await ctx.channel.send("Le prefix a été changer a `"+NEWPREFIX+"`")
+    writeLogs(f"{str(ctx.author)} a changer le prefix a {NEWPREFIX}")
+
 
 def writeId(id):
     now = str(datetime.now()).split(" ")[0]
@@ -29,14 +67,31 @@ def writeId(id):
     f.write(str(id) + ";" +now +"\n")
     f.close()
 
+@bot.command (name = "showLogs", aliases = ["logs","Logs","ShowLogs","showlogs","Showlogs"])
+@commands.has_role("Staff")
+async def showLogs(ctx,date = str(date.today())):
+    logname="Log-"+date+".txt"
+    message =""
+    try:
+        log = open(f"Logs/{logname}","r")
+        data = log.readlines()
+        log.close()
+        await ctx.channel.send(f"Logs du {date}")
+        for line in data:
+            message = message+line
+        await ctx.channel.send(message)
 
-@bot.command(name = "manageRole", aliases=['role'])
-async def manageRole(ctx):
+    except Exception as e:
+        await ctx.channel.send("Veuillez entrer une date valide dans le format `YYYY-MM-DD` ou j'ai été en fonction")
+        await ctx.channel.send(":warning: Si rien ne s'est passé ce jour-ci, les logs du jour n'existeront pas :warning:")
+    
+        
+async def manageRole():
+    Channel = bot.get_guild(GUILD).get_channel(ARRIVAL)
     reac2 = "<:CAT_Simp:864745278685970452>"
     reac1 = "<:OG_Smug:708637710608498698>"
     await deletAllMessages()
-    role = get(ctx.guild.roles, name="Event")
-    message = await ctx.channel.send(f"Réagissez pour recevoir le role adéquoit :\n{reac1} : `Resident permanent`\n{reac2} : `Event`")
+    message = await Channel.send(f"Réagissez pour recevoir le role adéquoit :\n{reac1} : `Resident permanent`\n{reac2} : `Event`")
     await message.add_reaction(reac1)
     await message.add_reaction(reac2)
     def check(reaction, user):
@@ -44,16 +99,16 @@ async def manageRole(ctx):
     while(True):
         try:
             reaction, user = await bot.wait_for('reaction_add', check=check)
-        except e:
+        except Exception as e:
             a=2
             print(a)
         else :
             if (str(reaction) == reac2):
-                await removeNew(ctx,user)
-                await event(ctx, user)
+                await removeNew(user)
+                await event(user)
             elif (str(reaction) == reac1):
-                await removeNew(ctx,user)
-                await stable(ctx,user)
+                await removeNew(user)
+                await member(user)
             
 
         
@@ -62,14 +117,15 @@ async def manageRole(ctx):
 async def on_member_join(member : discord.member):
     role = get(bot.get_guild(GUILD).roles, name="Nouvel Arrivant")
     await member.add_roles(role)
+    writeLogs(f"{str(member)} a rejoint le server")
 
 
-async def removeNew(ctx, member : discord.user):
+async def removeNew(member : discord.user):
     role = get(bot.get_guild(GUILD).roles, name="Nouvel Arrivant")
     await member.remove_roles(role)
 
 
-async def event(ctx, member : discord.user):
+async def event(member : discord.user):
     flag = False
     role = get(bot.get_guild(GUILD).roles, name="Event")
     
@@ -81,12 +137,14 @@ async def event(ctx, member : discord.user):
     f.close()
     if not flag:
         writeId(member.id)
+    writeLogs(f"{str(member)} a recut le role {role}")
 
 
 
-async def stable(ctx, member : discord.user):
+async def member(member : discord.user):
     role = get(bot.get_guild(GUILD).roles, name="Random Members")
     await member.add_roles(role)
+    writeLogs(f"{str(member)} a recut le role {role}")
         
 
 @tasks.loop(minutes=10)
@@ -126,6 +184,7 @@ async def checkForTime(member : discord.user):
             await user.remove_roles(role)
             await bot.get_guild(GUILD).kick(user)
             updateEventFile(str(userId))
+            writeLogs(f"{str(user)} a été kick du server apès 2 jours du role event")
 
 
 async def deletAllMessages():
@@ -150,4 +209,4 @@ def updateEventFile(id):
     for i in listUsersEvent:
         f.write(i+"\n")
 
-bot.run(str(os.getenv("TOKENP1") + os.getenv("TOKENP2")))
+bot.run(TOKEN)

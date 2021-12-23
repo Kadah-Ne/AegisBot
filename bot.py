@@ -57,7 +57,7 @@ async def manageRole():
     Channel = bot.get_guild(GUILD).get_channel(ARRIVAL)
     reac2 = "<:CAT_Simp:864745278685970452>"
     reac1 = "<:OG_Smug:708637710608498698>"
-    await deletAllMessages()
+    await DELETE(bot.get_guild(GUILD).get_channel(ARRIVAL))
     message = await Channel.send(f"Réagissez pour recevoir le role adéquoit :\n{reac1} : `Resident permanent`\n{reac2} : `Event`")
     await message.add_reaction(reac1)
     await message.add_reaction(reac2)
@@ -177,6 +177,25 @@ def updateEventFile(id : str):
     for i in listUsersEvent:
         f.write(i+"\n")
 
+########### Fonctions de gestion du server
+
+#Fonction qui supprime tout les messages du channel *
+@bot.command(name = "Purge")
+@commands.has_permissions(manage_messages=True)
+async def deletAllMessages(ctx, channelID : discord.channel = None):
+    if channelID:
+        channel = channelID
+    else:
+        channel = ctx.channel
+    await DELETE(channel)
+    writeLogs(f"{str(ctx.author)} a supprimer les messages du salon {channel}")
+
+async def DELETE(channel : discord.channel):
+    messages = await channel.history(limit=10).flatten()
+    for i in messages:
+        await i.delete()
+    
+
 ########### Fonctions pour controler le Bot
 
 #Fonction d'affichage des logs
@@ -222,12 +241,8 @@ async def pref(ctx,NEWPREFIX : str):
     await ctx.channel.send("Le prefix a été changer a `"+NEWPREFIX+"`")
     writeLogs(f"{str(ctx.author)} a changer le prefix a {NEWPREFIX}")
 
-#Fonction qui supprime tout les messages du channel d'arrivée
-async def deletAllMessages():
-    channel = bot.get_guild(GUILD).get_channel(ARRIVAL)
-    messages = await channel.history(limit=123).flatten()
-    for i in messages:
-        await i.delete()
+
+
 
 
 bot.run(TOKEN)

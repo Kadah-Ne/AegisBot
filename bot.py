@@ -40,6 +40,18 @@ async def on_ready():
 
 ########### Fonctions de gestion des roles
 
+#Fonction permettant de promouvoir quelqu'un en membre permanant
+@bot.command (name="promote", aliases = ["Promote"])
+@commands.has_role('Staff')
+async def promote(ctx,peon : discord.Member):
+    role = get(bot.get_guild(GUILD).roles, name="Event")
+    if role in peon.roles:
+        await member(peon)
+        updateEventFile(str(peon.id))
+        await peon.remove_roles(role)
+        writeLogs(f"{str(member)} a ete promue en membre permanant")
+
+
 #Fonction du menu de role cote server   
 async def manageRole():
     Channel = bot.get_guild(GUILD).get_channel(ARRIVAL)
@@ -149,8 +161,8 @@ def writeId(id):
     f.write(str(id) + ";" +now +"\n")
     f.close()
 
-#Fonction qui met a jour la liste des utilisateur temporaires
-def updateEventFile(id):
+#Fonction qui met a jour la liste des utilisateur temporaires en retirant l'id de l'utilisateur kick
+def updateEventFile(id : str):
     listUsersEvent = []
     temp = ""
     f = open("Liste","r")

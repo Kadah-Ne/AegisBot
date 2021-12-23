@@ -27,8 +27,8 @@ listeEvents=[]
 client = discord.Client()
 intents = discord.Intents.all()
 
+#initialisation de la variable contenant le bot
 bot = commands.Bot(command_prefix=PREFIX,intents=intents)
-
 
 @bot.event
 async def on_ready():
@@ -38,54 +38,9 @@ async def on_ready():
     await checkEveryone.start()
     
 
-def writeLogs(message : str):
-    Horodatage = "["+str(datetime.now()).split(".")[0]+"]"
-    logname = "Log-"+str(date.today())+".txt"
-    log = open(f"Logs/{logname}","a")
-    log.write(Horodatage+" "+message+"\n")
-    log.close()
+########### Fonctions de gestion des roles
 
-@bot.command (name = "Prefix", aliases = ["prefix","p","P"])
-@commands.has_role('Staff')
-async def pref(ctx,NEWPREFIX : str):
-    f = open("config","r")
-    lines = f.readlines()
-    f.close()
-    f = open("config","w")
-    for line in lines:
-        if "DEFAULTPREFIX=" not in line:
-            f.write(line)
-    f.write("DEFAULTPREFIX="+NEWPREFIX)
-
-    await ctx.channel.send("Le prefix a été changer a `"+NEWPREFIX+"`")
-    writeLogs(f"{str(ctx.author)} a changer le prefix a {NEWPREFIX}")
-
-
-def writeId(id):
-    now = str(datetime.now()).split(" ")[0]
-    f = open("Liste","a")
-    f.write(str(id) + ";" +now +"\n")
-    f.close()
-
-@bot.command (name = "showLogs", aliases = ["logs","Logs","ShowLogs","showlogs","Showlogs"])
-@commands.has_role("Staff")
-async def showLogs(ctx,date = str(date.today())):
-    logname="Log-"+date+".txt"
-    message =""
-    try:
-        log = open(f"Logs/{logname}","r")
-        data = log.readlines()
-        log.close()
-        await ctx.channel.send(f"Logs du {date}")
-        for line in data:
-            message = message+line
-        await ctx.channel.send(message)
-
-    except Exception as e:
-        await ctx.channel.send("Veuillez entrer une date valide dans le format `YYYY-MM-DD` ou j'ai été en fonction")
-        await ctx.channel.send(":warning: Si rien ne s'est passé ce jour-ci, les logs du jour n'existeront pas :warning:")
-    
-        
+#Fonction du menu de role cote server   
 async def manageRole():
     Channel = bot.get_guild(GUILD).get_channel(ARRIVAL)
     reac2 = "<:CAT_Simp:864745278685970452>"
@@ -112,7 +67,7 @@ async def manageRole():
             
 
         
-
+#Fonction donnant un role aux nouveaux arrivants
 @bot.event
 async def on_member_join(member : discord.member):
     role = get(bot.get_guild(GUILD).roles, name="Nouvel Arrivant")
@@ -120,11 +75,12 @@ async def on_member_join(member : discord.member):
     writeLogs(f"{str(member)} a rejoint le server")
 
 
+#Fonction retirant le role de nouvel arrivant
 async def removeNew(member : discord.user):
     role = get(bot.get_guild(GUILD).roles, name="Nouvel Arrivant")
     await member.remove_roles(role)
 
-
+#Fonction donnant le role temporaire
 async def event(member : discord.user):
     flag = False
     role = get(bot.get_guild(GUILD).roles, name="Event")
@@ -140,13 +96,13 @@ async def event(member : discord.user):
     writeLogs(f"{str(member)} a recut le role {role}")
 
 
-
+#Fonction donnant le role permanent
 async def member(member : discord.user):
     role = get(bot.get_guild(GUILD).roles, name="Random Members")
     await member.add_roles(role)
     writeLogs(f"{str(member)} a recut le role {role}")
         
-
+#Loop lit la liste des utilisateurs temporaires et lance la fonction de check pour chacun
 @tasks.loop(minutes=10)
 async def checkEveryone():
     listevent=[]
@@ -160,7 +116,7 @@ async def checkEveryone():
         await checkForTime(i)
 
 
-
+#Fonction qui verifie si la durée de vie d'un membre est dépassée
 async def checkForTime(member : discord.user):
     user = ""
     role = get(bot.get_guild(GUILD).roles, name="Event")
@@ -186,14 +142,14 @@ async def checkForTime(member : discord.user):
             updateEventFile(str(userId))
             writeLogs(f"{str(user)} a été kick du server apès 2 jours du role event")
 
+#Fonction qui ecrit dans le fichier des utilisateur temporaires
+def writeId(id):
+    now = str(datetime.now()).split(" ")[0]
+    f = open("Liste","a")
+    f.write(str(id) + ";" +now +"\n")
+    f.close()
 
-async def deletAllMessages():
-    channel = bot.get_guild(GUILD).get_channel(ARRIVAL)
-    messages = await channel.history(limit=123).flatten()
-    for i in messages:
-        await i.delete()
-
-
+#Fonction qui met a jour la liste des utilisateur temporaires
 def updateEventFile(id):
     listUsersEvent = []
     temp = ""
@@ -208,5 +164,58 @@ def updateEventFile(id):
     f = open("Liste","w")
     for i in listUsersEvent:
         f.write(i+"\n")
+
+########### Fonctions pour controler le Bot
+
+#Fonction d'affichage des logs
+@bot.command (name = "showLogs", aliases = ["logs","Logs","ShowLogs","showlogs","Showlogs"])
+@commands.has_role("Staff")
+async def showLogs(ctx,date = str(date.today())):
+    logname="Log-"+date+".txt"
+    message =""
+    try:
+        log = open(f"Logs/{logname}","r")
+        data = log.readlines()
+        log.close()
+        await ctx.channel.send(f"Logs du {date}")
+        for line in data:
+            message = message+line
+        await ctx.channel.send(message)
+
+    except Exception as e:
+        await ctx.channel.send("Veuillez entrer une date valide dans le format `YYYY-MM-DD` ou j'ai été en fonction")
+        await ctx.channel.send(":warning: Si rien ne s'est passé ce jour-ci, les logs du jour n'existeront pas :warning:")
+
+#Fonction d'écriture des logs
+def writeLogs(message : str):
+    Horodatage = "["+str(datetime.now()).split(".")[0]+"]"
+    logname = "Log-"+str(date.today())+".txt"
+    log = open(f"Logs/{logname}","a")
+    log.write(Horodatage+" "+message+"\n")
+    log.close()
+
+#Fonction permettant de changer le prefix (néccessite un reboot)
+@bot.command (name = "Prefix", aliases = ["prefix","p","P"])
+@commands.has_role('Staff')
+async def pref(ctx,NEWPREFIX : str):
+    f = open("config","r")
+    lines = f.readlines()
+    f.close()
+    f = open("config","w")
+    for line in lines:
+        if "DEFAULTPREFIX=" not in line:
+            f.write(line)
+    f.write("DEFAULTPREFIX="+NEWPREFIX)
+
+    await ctx.channel.send("Le prefix a été changer a `"+NEWPREFIX+"`")
+    writeLogs(f"{str(ctx.author)} a changer le prefix a {NEWPREFIX}")
+
+#Fonction qui supprime tout les messages du channel d'arrivée
+async def deletAllMessages():
+    channel = bot.get_guild(GUILD).get_channel(ARRIVAL)
+    messages = await channel.history(limit=123).flatten()
+    for i in messages:
+        await i.delete()
+
 
 bot.run(TOKEN)

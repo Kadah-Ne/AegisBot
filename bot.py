@@ -211,8 +211,10 @@ async def showLogs(ctx,date = str(date.today())):
         await ctx.channel.send(f"Logs du {date}")
         for line in data:
             message = message+line
+            if len(message)>=500:
+                await ctx.channel.send(message)
+                message = ""
         await ctx.channel.send(message)
-
     except Exception as e:
         await ctx.channel.send("Veuillez entrer une date valide dans le format `YYYY-MM-DD` ou j'ai été en fonction")
         await ctx.channel.send(":warning: Si rien ne s'est passé ce jour-ci, les logs du jour n'existeront pas :warning:")
@@ -228,18 +230,21 @@ def writeLogs(message : str):
 #Fonction permettant de changer le prefix (néccessite un reboot)
 @bot.command (name = "Prefix", aliases = ["prefix","p","P"])
 @commands.has_role('Staff')
-async def pref(ctx,NEWPREFIX : str):
-    f = open("config","r")
-    lines = f.readlines()
-    f.close()
-    f = open("config","w")
-    for line in lines:
-        if "DEFAULTPREFIX=" not in line:
-            f.write(line)
-    f.write("DEFAULTPREFIX="+NEWPREFIX)
+async def pref(ctx,NEWPREFIX : str = None):
+    if NEWPREFIX:
+        f = open("config","r")
+        lines = f.readlines()
+        f.close()
+        f = open("config","w")
+        for line in lines:
+            if "DEFAULTPREFIX=" not in line:
+                f.write(line)
+        f.write("DEFAULTPREFIX="+NEWPREFIX)
 
-    await ctx.channel.send("Le prefix a été changer a `"+NEWPREFIX+"`")
-    writeLogs(f"{str(ctx.author)} a changer le prefix a {NEWPREFIX}")
+        await ctx.channel.send("Le prefix a été changer a `"+NEWPREFIX+"`")
+        writeLogs(f"{str(ctx.author)} a changer le prefix a {NEWPREFIX}")
+    else:
+        await ctx.channel.send(f"Mon prefix actuel est : `{PREFIX}`")
 
 
 

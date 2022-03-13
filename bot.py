@@ -30,6 +30,7 @@ intents = discord.Intents.all()
 #initialisation de la variable contenant le bot
 bot = commands.Bot(command_prefix=PREFIX,intents=intents)
 
+
 @bot.event
 async def on_ready():
     print("Aegis is up and running")
@@ -117,6 +118,7 @@ async def member(member : discord.user):
 #Loop lit la liste des utilisateurs temporaires et lance la fonction de check pour chacun
 @tasks.loop(minutes=10)
 async def checkEveryone():
+    today= str(date.today())
     listevent=[]
     members = await bot.get_guild(GUILD).fetch_members().flatten()
     for i in members:
@@ -201,14 +203,16 @@ async def DELETE(channel : discord.channel):
 #Fonction d'affichage des logs
 @bot.command (name = "showLogs", aliases = ["logs","Logs","ShowLogs","showlogs","Showlogs"])
 @commands.has_role("Staff")
-async def showLogs(ctx,date = str(date.today())):
-    logname="Log-"+date+".txt"
+async def showLogs(ctx,InputDate = None):
+    if not InputDate:
+        InputDate = str(date.today())
+    logname="Log-"+InputDate+".txt"
     message =""
     try:
         log = open(f"Logs/{logname}","r")
         data = log.readlines()
         log.close()
-        await ctx.channel.send(f"Logs du {date}")
+        await ctx.channel.send(f"Logs du {InputDate}")
         for line in data:
             message = message+line
             if len(message)>=500:

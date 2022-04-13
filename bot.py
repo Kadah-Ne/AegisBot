@@ -35,10 +35,6 @@ bot = commands.Bot(command_prefix=PREFIX,intents=intents)
 async def on_ready():
     print("Aegis is up and running")
     for guild in bot.guilds:
-        for channel in guild.text_channels :
-            if str(channel) == "general" :
-                await channel.send('Bot Activated..')
-                await channel.send(file=discord.File('add_gif_file_name_here.png'))
         print('Active in {}\n Member Count : {}'.format(guild.name,guild.member_count))
     writeLogs("Aegis a redemarre")
     await manageRole()

@@ -1,3 +1,3 @@
 # BotServer
 
-required : python-dotenv / discord
+required : python-dotenv / discord / Pynacl / youtube-dl

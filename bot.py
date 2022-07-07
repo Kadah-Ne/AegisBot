@@ -83,7 +83,7 @@ async def manageRoleArrival():
     reac2 = "<:CAT_Simp:864745278685970452>"
     reac1 = "<:OG_Smug:708637710608498698>"
     await DELETE(bot.get_guild(GUILD).get_channel(ARRIVAL))
-    message = await Channel.send(f"Réagissez pour recevoir le role adéquoit :\n{reac1} : `Random member` : Ce role est attribué a toute personne souhaitant rester sur le server\n{reac2} : `Event` : Ce role est attribué aux personnes ne souhaitant pas rester sur le server plus de 3 jours")
+    message = await Channel.send(f"Réagissez pour recevoir le role adéquoit :\n{reac1} : `Random member` : Ce role donne accès à tout le serveur pour une période illimitée\n{reac2} : `Event` : Ce role donne accès a un channel particuler utilisé pour un événement auquel vous avez été invités, vous serez kick au bout de 3 jours")
     await message.add_reaction(reac1)
     await message.add_reaction(reac2)
     def check(reaction, user):

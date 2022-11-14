@@ -5,10 +5,12 @@ import discord
 class CogRoleMenuG(commands.Cog):
     def __init__(self,bot,guild):
         self.bot = bot
-        self.guild = guild
-        self.dicoRole = {}
-        self.dicoImg = {}
         self.msgId = None
+        self.dicoImg = {}
+        self.dicoRole = {}
+        self.guild = guild
+
+
 
     async def setupDicoR(self):
         self.dicoRole["Member"] = get(self.guild.roles, name="Random Members")
@@ -25,43 +27,32 @@ class CogRoleMenuG(commands.Cog):
         self.dicoImg["LOL"] = "<:LOL_12:838472239761850399>"
         self.dicoImg["YGO"] = "<:AM_Kaiba_Deleted:781176640721256449>"
         self.dicoImg["APEX"] = "<:ApexLegends:975748414136533092>"
+
+        
     
     async def RoleM(self,channelG,channelR):
         await self.setupDicoI()
         await self.setupDicoR()
         await self.MenuR(channelR)
+        
     
     async def MenuR(self,channel):
-        message = await channel.send(f"Réagissez pour recevoir le role adéquoit :\n{self.dicoImg['Member']} : `Membre`\n{self.dicoImg['Event']} : `Simp`")
+        message = await channel.send(f"Réagissez pour recevoir le role adéquat :\n{self.dicoImg['Member']} : `Membre`\n{self.dicoImg['Event']} : `Simp`")
         await message.add_reaction(self.dicoImg["Member"])
         await message.add_reaction(self.dicoImg["Event"])
 
-        ####################
         self.msgId = message.id
 
-        # def check(reaction, user):
-        #             return user != message.author and (str(reaction.emoji) == self.dicoImg["Member"] or str(reaction.emoji) == self.dicoImg["Event"])
-        # while(True):
-        #     try:
-        #         reaction, user = await self.bot.wait_for('reaction_add', check=check)
-        #         print(user)
-        #     except Exception as e:
-        #         a=2
-        #         print(a)
-        #     else :
-        #         if (str(reaction) == self.dicoImg["Member"]):
-        #             await user.add_roles(self.dicoRole["Member"])
-        #         elif (str(reaction) == self.dicoImg["Event"]):
-        #             await user.add_roles(self.dicoRole["Event"])
+    
 
     @commands.Cog.listener()
     async def on_raw_reaction_add(self,payload):
         message = await self.bot.get_channel(payload.channel_id).fetch_message(payload.message_id)
-        reaction = message.reactions
+        reaction = str(payload.emoji)
         user = payload.member
-        print(reaction)
-        # if reaction == self.dicoImg["Event"] and message == self.msgId and user.id != 916425159601180703:
-        #     print("yes")
+        #print(f"Reaction : {str(reaction)},{self.dicoImg['Event']}")
+        if  user.id != 916425159601180703 and reaction == self.dicoImg["Event"] and message.id == self.msgId:
+            print("yes")
             
 
                 

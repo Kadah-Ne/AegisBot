@@ -32,7 +32,8 @@ async def on_ready():
     RoleGame = CogRoleMenuG(bot,guild)
     Manager = CogManage(bot,guild)
     await setup(bot,RoleGame,Manager)
-    await Manager.DELETE(1016701714478411827)
+    await Manager.DELETE(FChannel)
+    await Manager.DELETE(GChannel)
     await RoleGame.RoleM(bot.get_channel(GChannel),bot.get_channel(FChannel))
     print("Aegis is running")
 

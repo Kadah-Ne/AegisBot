@@ -67,12 +67,13 @@ class CogRoleMenuG(commands.Cog):
         reaction = str(payload.emoji)
         user = payload.member
         if  user.id != 916425159601180703 and message.id == self.msgIdStatus:
-            if reaction == self.dicoImg["Event"]:
-                await self.addRole(user,self.dicoRole["Event"])
-                await self.rmvRole(user,self.dicoRole["New"])
-            elif reaction == self.dicoImg["Member"]:
+            if reaction == self.dicoImg["Member"]:
                 await self.addRole(user,self.dicoRole["Member"])
                 await self.rmvRole(user,self.dicoRole["New"])
+            elif reaction == self.dicoImg["Event"]:
+                await self.addRole(user,self.dicoRole["Event"])
+                await self.rmvRole(user,self.dicoRole["New"])
+            
 
         elif user.id != 916425159601180703 and message.id == self.msgIdGame:
             if reaction == self.dicoImg["LOL"]:

@@ -16,7 +16,7 @@ Prefix = getenv("DEFAULTPREFIX")
 client = discord.Client()
 intents = discord.Intents.all()
 TOKEN = str(getenv("TOKENP1") + getenv("TOKENP2"))
-bot = commands.Bot(command_prefix='&',intents=intents)
+bot = commands.Bot(command_prefix=Prefix,intents=intents)
 
 
 

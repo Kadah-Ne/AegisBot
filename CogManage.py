@@ -27,9 +27,9 @@ class CogManage(commands.Cog):
         await self.DELETE(channel)
         
 
-    async def DELETE(self,channelId : int):
+    async def DELETE(self,channelId : int, nb :int = 10):
         channel = self.bot.get_channel(channelId)
-        messages = await channel.history(limit=10).flatten()
+        messages = await channel.history(limit=nb).flatten()
         for i in messages:
             await i.delete()
 

@@ -11,7 +11,7 @@ from CogManage import CogManage
 load_dotenv(dotenv_path="config")
 GUILD = int(getenv("GUILD")) #Server discord par defaut
 FChannel = int(getenv("ARRIVALCHANNEL"))
-GChannel = int(getenv("GAMECHANNELCHANNEL"))
+GChannel = int(getenv("GAMECHANNEL"))
 Prefix = getenv("DEFAULTPREFIX")
 client = discord.Client()
 intents = discord.Intents.all()

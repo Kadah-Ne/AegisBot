@@ -1,9 +1,10 @@
 from discord.ext import commands
 from discord.utils import get
 class CogJoin(commands.Cog):
-    def __inti__(self,bot):
+    def __inti__(self,bot,Manager):
         self.bot = bot
         self._lastMemeber = None
+        self.Manager = Manager
 
     async def addRoleNew(self,target):
         Role = get(target.guild.roles, name="Nouvel Arrivant")
@@ -16,6 +17,7 @@ class CogJoin(commands.Cog):
             await channel.send(f'Bienvenue {member.mention}.')
         self._lastMemeber = member
         await self.addRoleNew(member)
+        await self.Manager.writeLogs(f"{member} as joined the server")
     
     
         

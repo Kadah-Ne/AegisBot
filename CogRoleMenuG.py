@@ -3,13 +3,14 @@ from discord.utils import get
 import discord
 
 class CogRoleMenuG(commands.Cog):
-    def __init__(self,bot,guild):
+    def __init__(self,bot,guild,Manager):
         self.bot = bot
         self.msgIdStatus = None
         self.msgIdGame = None
         self.dicoImg = {}
         self.dicoRole = {}
         self.guild = guild
+        self.Manager = Manager
 
 
     async def addRole(self,target,Role):

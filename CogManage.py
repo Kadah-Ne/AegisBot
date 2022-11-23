@@ -76,7 +76,7 @@ class CogManage(commands.Cog):
         if message == None :
             dateStr = datetime.now().strftime("%d%m%Y")
             Chemin = Path(f"./Logs/logs-{dateStr}.txt")
-            if Chemin.exists(Chemin):
+            if Chemin.exists():
                 logs = open(Chemin)
                 lines = logs.readlines()
                 for line in lines:

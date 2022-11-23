@@ -28,9 +28,9 @@ async def setup(bot,Setuper,RoleGame,Manager):
     
 @bot.event
 async def on_ready():
+    guild = bot.get_guild(GUILD) 
     Manager = CogManage(bot,guild)
     Setuper = CogJoin(bot,Manager)
-    guild = bot.get_guild(GUILD)   
     RoleGame = CogRoleMenuG(bot,guild,Manager)
     await setup(bot,Setuper,RoleGame,Manager)
     await Manager.DELETE(FChannel)

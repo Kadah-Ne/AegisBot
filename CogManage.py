@@ -75,6 +75,7 @@ class CogManage(commands.Cog):
         
         if message == None :
             dateStr = datetime.now().strftime("%d%m%Y")
+            date = datetime.now()
             Chemin = Path(f"./Logs/logs-{dateStr}.txt")
             if Chemin.exists():
                 logs = open(Chemin)

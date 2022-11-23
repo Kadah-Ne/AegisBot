@@ -36,6 +36,7 @@ async def on_ready():
     await Manager.DELETE(FChannel)
     await Manager.DELETE(GChannel)
     await RoleGame.RoleM(bot.get_channel(GChannel),bot.get_channel(FChannel))
+    await Manager.writeLogs(f"Aegis Bot a redémarrer")
     print("Aegis is running")
 
 

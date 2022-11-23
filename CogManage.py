@@ -91,13 +91,12 @@ class CogManage(commands.Cog):
             else:
                 ctx.channel.send(f"Aucun log pour la journée du {date.strftime('%D %B %Y')}")
         else:
-            match a:
-                case 0:
-                    date = datetime.strptime(message,"%d %m %Y")
-                case 1:
-                    date = datetime.strptime(message,"%d/%m/%Y")
-                case 2:
-                    date = datetime.strptime(message,"%d-%m-%Y")
+            if a == 0:
+                date = datetime.strptime(message,"%d %m %Y")
+            elif a == 1:
+                date = datetime.strptime(message,"%d/%m/%Y")
+            elif a == 3:
+                date = datetime.strptime(message,"%d-%m-%Y")
 
             if a !=3 :
                 dateStr = date.strftime("%d%m%Y")

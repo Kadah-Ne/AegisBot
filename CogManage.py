@@ -81,9 +81,9 @@ class CogManage(commands.Cog):
                 logs = open(Chemin)
                 lines = logs.readlines()
                 for line in lines:
-                    ctx.channel.send(line)
+                    await ctx.channel.send(line)
             else:
-                ctx.channel.send(f"Aucun log pour la journée du {date.strftime('%D %B %Y')}")
+                await ctx.channel.send(f"Aucun log pour la journée du {date.strftime('%D %B %Y')}")
         else:
             if message.__contains__(" "):
                 a = 0
@@ -108,10 +108,10 @@ class CogManage(commands.Cog):
                     logs = open(Chemin)
                     lines = logs.readlines()
                     for line in lines:
-                        ctx.channel.send(line)
+                        await ctx.channel.send(line)
                 else:
-                    ctx.channel.send(f"Aucun log pour la journée du {date.strftime('%D %B %Y')}")
+                    await ctx.channel.send(f"Aucun log pour la journée du {date.strftime('%D %B %Y')}")
             else:
-                ctx.channel.send("Veuillez appeler cette fonction avec une date dans un des formats suivants :\n `jj mm aaaa` \n `jj-mm-aaaa` \n `jj/mm/aaaa`")
+                await ctx.channel.send("Veuillez appeler cette fonction avec une date dans un des formats suivants :\n `jj mm aaaa` \n `jj-mm-aaaa` \n `jj/mm/aaaa`")
     
     

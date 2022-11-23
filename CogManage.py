@@ -71,14 +71,7 @@ class CogManage(commands.Cog):
     @commands.command (name = "Logs", aliases = ["logs","Log","log"])
     @commands.has_role('Staff')
     async def showLogs(self,ctx,message : str = None):
-        if message.__contains__(" "):
-            a = 0
-        elif message.__contains__("/"):
-            a = 1
-        elif message.__contains__("-"):
-            a = 2
-        else :
-            a = 3
+        
         
         if message == None :
             dateStr = datetime.now().strftime("%d%m%Y")
@@ -91,6 +84,15 @@ class CogManage(commands.Cog):
             else:
                 ctx.channel.send(f"Aucun log pour la journée du {date.strftime('%D %B %Y')}")
         else:
+            if message.__contains__(" "):
+                a = 0
+            elif message.__contains__("/"):
+                a = 1
+            elif message.__contains__("-"):
+                a = 2
+            else :
+                a = 3
+                
             if a == 0:
                 date = datetime.strptime(message,"%d %m %Y")
             elif a == 1:

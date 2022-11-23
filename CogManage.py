@@ -15,7 +15,7 @@ class CogManage(commands.Cog):
     async def writeLogs(self,message):
         dateStr = datetime.now().strftime("%d%m%Y")
         Chemin = Path(f"./Logs/logs-{dateStr}.txt")
-        if not Chemin.exists(Chemin):
+        if not Chemin.exists():
             logs = open(Chemin,"w")
             logs.write(f"{time.strftime('%H:%M:%S', time.localtime())} - {message}")
             logs.close()

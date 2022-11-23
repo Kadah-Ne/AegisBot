@@ -103,7 +103,7 @@ class CogManage(commands.Cog):
             if a !=3 :
                 dateStr = date.strftime("%d%m%Y")
                 Chemin = Path(f"./Logs/logs-{dateStr}.txt")
-                if Chemin.exists(Chemin):
+                if Chemin.exists():
                     logs = open(Chemin)
                     lines = logs.readlines()
                     for line in lines:

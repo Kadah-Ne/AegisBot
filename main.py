@@ -16,25 +16,27 @@ Prefix = getenv("DEFAULTPREFIX")
 client = discord.Client()
 intents = discord.Intents.all()
 TOKEN = str(getenv("TOKENP1") + getenv("TOKENP2"))
-bot = commands.Bot(command_prefix='&',intents=intents)
+bot = commands.Bot(command_prefix=Prefix,intents=intents)
 
 
 
 
-async def setup(bot,RoleGame,Manager):
-    bot.add_cog(CogJoin(bot))
+async def setup(bot,Setuper,RoleGame,Manager):
+    bot.add_cog(Setuper)
     bot.add_cog(RoleGame)
     bot.add_cog(Manager)
     
 @bot.event
 async def on_ready():
-    guild = bot.get_guild(GUILD)   
-    RoleGame = CogRoleMenuG(bot,guild)
+    guild = bot.get_guild(GUILD) 
     Manager = CogManage(bot,guild)
-    await setup(bot,RoleGame,Manager)
+    Setuper = CogJoin(bot,Manager)
+    RoleGame = CogRoleMenuG(bot,guild,Manager)
+    await setup(bot,Setuper,RoleGame,Manager)
     await Manager.DELETE(FChannel)
     await Manager.DELETE(GChannel)
     await RoleGame.RoleM(bot.get_channel(GChannel),bot.get_channel(FChannel))
+    await Manager.writeLogs(f"Aegis Bot a redémarrer")
     print("Aegis is running")
 
 

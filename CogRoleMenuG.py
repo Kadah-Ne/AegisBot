@@ -27,6 +27,9 @@ class CogRoleMenuG(commands.Cog):
         self.dicoRole["YGO"] = get(self.guild.roles, name="Yu gi oh")
         self.dicoRole["APEX"] = get(self.guild.roles, name="Apex Legends")
 
+        ## Added Civ role 06/12/2022
+        self.dicoRole["CIV"] = get(self.guild.roles, name="CIV")
+
     async def setupDicoI(self):
         self.dicoImg["Member"] = "<:OG_Smug:708637710608498698>"
         self.dicoImg["Event"] = "<:CAT_Simp:864745278685970452>"
@@ -34,6 +37,9 @@ class CogRoleMenuG(commands.Cog):
         self.dicoImg["LOL"] = "<:LOL_12:838472239761850399>"
         self.dicoImg["YGO"] = "<:AM_Kaiba_Deleted:781176640721256449>"
         self.dicoImg["APEX"] = "<:ApexLegends:975748414136533092>"
+
+        ## Added Civ role 06/12/2022
+        self.dicoImg["CIV"] = "<:CIV_Gilgabro:1049706958816546926>"
 
         
     
@@ -82,7 +88,11 @@ class CogRoleMenuG(commands.Cog):
             elif reaction == self.dicoImg["FF"]:
                 await self.addRole(user,self.dicoRole["FF"])
             elif reaction == self.dicoImg["APEX"]:
-                await self.addRole(user,self.dicoRole["APEX"])    
+                await self.addRole(user,self.dicoRole["APEX"])
+
+            ## Added Civ role 06/12/2022
+            elif reaction == self.dicoImg["CIV"]:
+                await self.addRole(user,self.dicoRole["CIV"])    
 
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self,payload):
@@ -97,7 +107,11 @@ class CogRoleMenuG(commands.Cog):
             elif reaction == self.dicoImg["FF"]:
                 await self.rmvRole(user,self.dicoRole["FF"])
             elif reaction == self.dicoImg["APEX"]:
-                await self.rmvRole(user,self.dicoRole["APEX"])   
+                await self.rmvRole(user,self.dicoRole["APEX"]) 
+
+            ## Added Civ role 06/12/2022
+            elif reaction == self.dicoImg["CIV"]:
+                await self.rmvRole(user,self.dicoRole["CIV"])   
             
 
                 

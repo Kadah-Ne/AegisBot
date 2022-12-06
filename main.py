@@ -28,6 +28,10 @@ async def setup(bot,Setuper,RoleGame,Manager):
     
 @bot.event
 async def on_ready():
+
+    ## 06/12/2022 Added presence
+    await bot.change_presence(activity=discord.Game(name="Made with 🐛s by Kadah Ne#2737"))
+    
     guild = bot.get_guild(GUILD) 
     Manager = CogManage(bot,guild)
     Setuper = CogJoin(bot,Manager)

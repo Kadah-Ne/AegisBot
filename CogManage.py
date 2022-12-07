@@ -20,8 +20,8 @@ class CogManage(commands.Cog):
             logs.write(f"{time.strftime('%H:%M:%S', time.localtime())} - {message}")
             logs.close()
         else:
-            logs = open(Chemin,"a")
-            logs.write(f"{time.strftime('%H:%M:%S', time.localtime())} - {message}")
+            logs = open(Chemin,"a+")
+            logs.write(f"\n{time.strftime('%H:%M:%S', time.localtime())} - {message}")
             logs.close()
 
     @commands.command (name="promote", aliases = ["Promote"])
@@ -71,7 +71,7 @@ class CogManage(commands.Cog):
     @commands.command (name = "Logs", aliases = ["logs","Log","log"])
     @commands.has_role('Staff')
     async def showLogs(self,ctx,message : str = None):
-        
+        LogChain = ""
         
         if message == None :
             dateStr = datetime.now().strftime("%d%m%Y")
@@ -81,7 +81,9 @@ class CogManage(commands.Cog):
                 logs = open(Chemin)
                 lines = logs.readlines()
                 for line in lines:
-                    await ctx.channel.send(line)
+                    LogChain+= line
+                await ctx.channel.send(LogChain)
+
             else:
                 await ctx.channel.send(f"Aucun log pour la journée du {date.strftime('%D %B %Y')}")
         else:
@@ -108,7 +110,8 @@ class CogManage(commands.Cog):
                     logs = open(Chemin)
                     lines = logs.readlines()
                     for line in lines:
-                        await ctx.channel.send(line)
+                        LogChain+= line
+                    await ctx.channel.send(LogChain)
                 else:
                     await ctx.channel.send(f"Aucun log pour la journée du {date.strftime('%D %B %Y')}")
             else:

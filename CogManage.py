@@ -77,7 +77,7 @@ class CogManage(commands.Cog):
             dateStr = datetime.now().strftime("%d%m%Y")
             date = datetime.now()
             Chemin = Path(f"./Logs/logs-{dateStr}.txt")
-            LogChain+=date.strftime("%D/%m/%Y")+"\n"
+            LogChain=date.strftime("%A - %d/%m/%Y") +" :"
             if Chemin.exists():
                 logs = open(Chemin)
                 lines = logs.readlines()
@@ -103,7 +103,7 @@ class CogManage(commands.Cog):
             if a !=3 :
                 dateStr = date.strftime("%d%m%Y")
                 Chemin = Path(f"./Logs/logs-{dateStr}.txt")
-                LogChain+=date.strftime("%D/%m/%Y")+"\n"
+                LogChain=date.strftime("%A - %d/%m/%Y") +" :"
                 if Chemin.exists():
                     logs = open(Chemin)
                     lines = logs.readlines()

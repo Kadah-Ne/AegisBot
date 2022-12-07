@@ -74,7 +74,7 @@ class CogRoleMenuG(commands.Cog):
     @commands.Cog.listener()
     async def on_raw_reaction_add(self,payload):
         message = await self.bot.get_channel(payload.channel_id).fetch_message(payload.message_id)
-        reaction = str(payload.emoji)
+        reaction = self.bot.get_emoji(payload.emoji.id)
         user = payload.member
         if  user.id != 916425159601180703 and message.id == self.msgIdStatus:
             if reaction == self.dicoImg["Member"]:
@@ -102,7 +102,7 @@ class CogRoleMenuG(commands.Cog):
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self,payload):
         message = await self.bot.get_channel(payload.channel_id).fetch_message(payload.message_id)
-        reaction = str(payload.emoji)
+        reaction = self.bot.get_emoji(payload.emoji.id)
         user = get(self.guild.members, id=payload.user_id)
         if user.id != 916425159601180703 and message.id == self.msgIdGame:
             if reaction == self.dicoImg["LOL"]:

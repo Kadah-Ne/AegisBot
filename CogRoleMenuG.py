@@ -32,15 +32,15 @@ class CogRoleMenuG(commands.Cog):
         self.dicoRole["CIV"] = get(self.guild.roles, name="CIV")
 
     async def setupDicoI(self):
-        self.dicoImg["Member"] = "<:OG_Smug:708637710608498698>"
-        self.dicoImg["Event"] = "<:CAT_Simp:864745278685970452>"
-        self.dicoImg["FF"] = "<:FFcroixbatonv:975748447481241630>"
-        self.dicoImg["LOL"] = "<:LOL_12:838472239761850399>"
-        self.dicoImg["YGO"] = "<:AM_Kaiba_Deleted:781176640721256449>"
-        self.dicoImg["APEX"] = "<:ApexLegends:975748414136533092>"
+        self.dicoImg["Member"] = self.bot.get_emoji(708637710608498698)
+        self.dicoImg["Event"] = self.bot.get_emoji(864745278685970452)
+        self.dicoImg["FF"] = self.bot.get_emoji(975748447481241630)
+        self.dicoImg["LOL"] = self.bot.get_emoji(838472239761850399)
+        self.dicoImg["YGO"] = self.bot.get_emoji(781176640721256449)
+        self.dicoImg["APEX"] = self.bot.get_emoji(975748414136533092)
 
         ## Added Civ role 06/12/2022
-        self.dicoImg["CIV"] = "<:CIV_Gilgabro:1049706958816546926>"
+        self.dicoImg["CIV"] = self.bot.get_emoji(1049706958816546926)
 
         
     
@@ -59,11 +59,14 @@ class CogRoleMenuG(commands.Cog):
         self.msgIdStatus = message.id
 
     async def MenuG(self,channel):
-        message = await channel.send(f"Réagissez pour recevoir le role adéquat :\n{self.dicoImg['LOL']} : `LOL`\n{self.dicoImg['YGO']} : `YGO`\n{self.dicoImg['APEX']} : `APEX`\n{self.dicoImg['FF']} : `FFXIV`")
+        message = await channel.send(f"Réagissez pour recevoir le role adéquat :\n{self.dicoImg['LOL']} : `LOL`\n{self.dicoImg['YGO']} : `YGO`\n{self.dicoImg['APEX']} : `APEX`\n{self.dicoImg['FF']} : `FFXIV`\n{self.dicoImg['CIV']} : `CIV`")
         await message.add_reaction(self.dicoImg["LOL"])
         await message.add_reaction(self.dicoImg["YGO"])
         await message.add_reaction(self.dicoImg["FF"])
         await message.add_reaction(self.dicoImg["APEX"])
+
+        ## 07/12/2022 Added CIV role
+        await message.add_reaction(self.dicoImg["CIV"])
 
         self.msgIdGame = message.id
     

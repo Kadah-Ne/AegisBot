@@ -86,7 +86,7 @@ class CogManage(commands.Cog):
                 await ctx.channel.send(LogChain)
 
             else:
-                await ctx.channel.send(f"Aucun log pour la journée du {date.strftime('%D %B %Y')}")
+                await ctx.channel.send(f"Aucun log pour la journée du {date.strftime('%d %B %Y')}")
         else:
             if message.__contains__("/"):
                 a = 1
@@ -111,7 +111,7 @@ class CogManage(commands.Cog):
                         LogChain+= line
                     await ctx.channel.send(LogChain)
                 else:
-                    await ctx.channel.send(f"Aucun log pour la journée du {date.strftime('%D %B %Y')}")
+                    await ctx.channel.send(f"Aucun log pour la journée du {date.strftime('%d %B %Y')}")
             else:
                 await ctx.channel.send("Veuillez appeler cette fonction avec une date dans un des formats suivants :\n `jj mm aaaa` \n `jj-mm-aaaa` \n `jj/mm/aaaa`")
     

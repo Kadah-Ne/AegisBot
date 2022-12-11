@@ -17,7 +17,7 @@ class CogManage(commands.Cog):
         Chemin = Path(f"./Logs/logs-{dateStr}.txt")
         if not Chemin.exists():
             logs = open(Chemin,"w")
-            logs.write(f"{time.strftime('%H:%M:%S', time.localtime())} - {message} \n")
+            logs.write(f"{time.strftime('%H:%M:%S', time.localtime())} - {message} ")
             logs.close()
         else:
             logs = open(Chemin,"a+")
@@ -86,8 +86,7 @@ class CogManage(commands.Cog):
                 await ctx.channel.send(LogChain)
 
             else:
-                await ctx.channel.send("J'ai reussi a recup la maj sur git")
-                #await ctx.channel.send(f"Aucun log pour la journée du {date.strftime('%d %B %Y')}")
+                await ctx.channel.send(f"Aucun log pour la journée du {date.strftime('%d %B %Y')}")
         else:
             if message.__contains__("/"):
                 a = 1
@@ -104,7 +103,7 @@ class CogManage(commands.Cog):
             if a !=3 :
                 dateStr = date.strftime("%d%m%Y")
                 Chemin = Path(f"./Logs/logs-{dateStr}.txt")
-                LogChain=date.strftime("%A - %d/%m/%Y") +" :"
+                LogChain=date.strftime("%A - %d/%m/%Y" ) +" :\n"
                 if Chemin.exists():
                     logs = open(Chemin)
                     lines = logs.readlines()

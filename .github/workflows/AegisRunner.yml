@@ -43,5 +43,6 @@ jobs:
       # Run Aegis
       - name: Run gunicorn
         run: |
+          source ../Desktop/GitHub/AegisBot
           RUNNER_TRACKING_ID=""
           python main.py &

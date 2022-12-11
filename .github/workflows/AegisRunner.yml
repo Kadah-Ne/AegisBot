@@ -41,8 +41,7 @@ jobs:
         run: pkill -f "python main.py" || true
 
       # Run Aegis
-      - name: Run gunicorn
+      - name: Run Aegis
         run: |
-          source ../Desktop/GitHub/AegisBot
           RUNNER_TRACKING_ID=""
           python main.py &

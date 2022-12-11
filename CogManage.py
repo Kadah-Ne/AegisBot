@@ -86,7 +86,8 @@ class CogManage(commands.Cog):
                 await ctx.channel.send(LogChain)
 
             else:
-                await ctx.channel.send(f"Aucun log pour la journée du {date.strftime('%d %B %Y')}")
+                await ctx.channel.send("J'ai reussi a recup la maj sur git")
+                #await ctx.channel.send(f"Aucun log pour la journée du {date.strftime('%d %B %Y')}")
         else:
             if message.__contains__("/"):
                 a = 1

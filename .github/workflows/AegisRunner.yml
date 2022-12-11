@@ -44,4 +44,4 @@ jobs:
       - name: Run gunicorn
         run: |
           RUNNER_TRACKING_ID=""
-          python main.py
+          python main.py &

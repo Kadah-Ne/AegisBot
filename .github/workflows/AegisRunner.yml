@@ -29,10 +29,8 @@ jobs:
       # Setup virtual env, install dependencies
       - name: Create new virtual env and activate it
         run: |
-          python3 -m venv Discord-Venv
-          source Discord-Venv/bin/activate
-          python3 -m pip install python-dotenv
-          python3 -m pip install discord
+          python -m pip install python-dotenv
+          python -m pip install discord
   deploy:
     runs-on: self-hosted
     needs: build
@@ -42,9 +40,8 @@ jobs:
       - name: Kill Aegis
         run: pkill -f "python main.py" || true
 
-      # Run gunicorn server
+      # Run Aegis
       - name: Run gunicorn
         run: |
-          source Discord-Venv/bin/activate
           RUNNER_TRACKING_ID=""
           python main.py

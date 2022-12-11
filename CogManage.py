@@ -16,6 +16,7 @@ class CogManage(commands.Cog):
         dateStr = datetime.now().strftime("%d%m%Y")
         Chemin = Path(f"./Logs/logs-{dateStr}.txt")
         if not Chemin.exists():
+
             logs = open(Chemin,"w")
             logs.write(f"{time.strftime('%H:%M:%S', time.localtime())} - {message} ")
             logs.close()

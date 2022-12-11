@@ -3,7 +3,7 @@ from discord.utils import get
 import discord
 
 class CogRoleMenuG(commands.Cog):
-    def __init__(self,bot,guild,Manager,messageRole,messageGame):
+    def __init__(self,bot,guild,Manager):
         self.bot = bot
         self.msgIdStatus = None
         self.msgIdGame = None
@@ -12,10 +12,6 @@ class CogRoleMenuG(commands.Cog):
         self.guild = guild
         self.Manager = Manager
 
-        if messageGame !="":
-            self.msgIdGame = messageGame
-        if messageRole != "":
-            self.msgIdStatus = messageRole
 
     async def addRole(self,target,Role):
         await target.add_roles(Role)
@@ -56,25 +52,23 @@ class CogRoleMenuG(commands.Cog):
         
     
     async def MenuR(self,channel):
-        if self.msgIdStatus == None :
-            message = await channel.send(f"Réagissez pour recevoir le role adéquat :\n{self.dicoImg['Member']} : `Membre`\n{self.dicoImg['Event']} : `Simp`")
-            await message.add_reaction(self.dicoImg["Member"])
-            await message.add_reaction(self.dicoImg["Event"])
+        message = await channel.send(f"Réagissez pour recevoir le role adéquat :\n{self.dicoImg['Member']} : `Membre`\n{self.dicoImg['Event']} : `Simp`")
+        await message.add_reaction(self.dicoImg["Member"])
+        await message.add_reaction(self.dicoImg["Event"])
 
-            self.msgIdStatus = message.id
+        self.msgIdStatus = message.id
 
     async def MenuG(self,channel):
-        if self.msgIdGame == None :
-            message = await channel.send(f"Réagissez pour recevoir le role adéquat :\n{self.dicoImg['LOL']} : `LOL`\n{self.dicoImg['YGO']} : `YGO`\n{self.dicoImg['APEX']} : `APEX`\n{self.dicoImg['FF']} : `FFXIV`\n{self.dicoImg['CIV']} : `CIV`")
-            await message.add_reaction(self.dicoImg["LOL"])
-            await message.add_reaction(self.dicoImg["YGO"])
-            await message.add_reaction(self.dicoImg["FF"])
-            await message.add_reaction(self.dicoImg["APEX"])
+        message = await channel.send(f"Réagissez pour recevoir le role adéquat :\n{self.dicoImg['LOL']} : `LOL`\n{self.dicoImg['YGO']} : `YGO`\n{self.dicoImg['APEX']} : `APEX`\n{self.dicoImg['FF']} : `FFXIV`\n{self.dicoImg['CIV']} : `CIV`")
+        await message.add_reaction(self.dicoImg["LOL"])
+        await message.add_reaction(self.dicoImg["YGO"])
+        await message.add_reaction(self.dicoImg["FF"])
+        await message.add_reaction(self.dicoImg["APEX"])
 
-            ## 07/12/2022 Added CIV role
-            await message.add_reaction(self.dicoImg["CIV"])
+        ## 07/12/2022 Added CIV role
+        await message.add_reaction(self.dicoImg["CIV"])
 
-            self.msgIdGame = message.id
+        self.msgIdGame = message.id
     
 
     @commands.Cog.listener()

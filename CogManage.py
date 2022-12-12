@@ -11,7 +11,7 @@ class CogManage(commands.Cog):
         self.bot = bot
         self.guild = guild
 
-    #Test Workflow
+
     async def writeLogs(self,message):
         dateStr = datetime.now().strftime("%d%m%Y")
         Chemin = Path(f"./Logs/logs-{dateStr}.txt")

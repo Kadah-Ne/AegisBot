@@ -78,7 +78,7 @@ class CogManage(commands.Cog):
             dateStr = datetime.now().strftime("%d%m%Y")
             date = datetime.now()
             Chemin = Path(f"./Logs/logs-{dateStr}.txt")
-            LogChain=date.strftime("%A - %d/%m/%Y") +" :"
+            LogChain=date.strftime("%A - %d/%m/%Y") +" :\n"
             if Chemin.exists():
                 logs = open(Chemin)
                 lines = logs.readlines()

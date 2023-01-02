@@ -11,13 +11,14 @@ class CogManage(commands.Cog):
         self.bot = bot
         self.guild = guild
 
-    
+
     async def writeLogs(self,message):
         dateStr = datetime.now().strftime("%d%m%Y")
         Chemin = Path(f"./Logs/logs-{dateStr}.txt")
         if not Chemin.exists():
+
             logs = open(Chemin,"w")
-            logs.write(f"{time.strftime('%H:%M:%S', time.localtime())} - {message}")
+            logs.write(f"{time.strftime('%H:%M:%S', time.localtime())} - {message} ")
             logs.close()
         else:
             logs = open(Chemin,"a+")
@@ -77,7 +78,7 @@ class CogManage(commands.Cog):
             dateStr = datetime.now().strftime("%d%m%Y")
             date = datetime.now()
             Chemin = Path(f"./Logs/logs-{dateStr}.txt")
-            LogChain=date.strftime("%A - %d/%m/%Y") +" :"
+            LogChain=date.strftime("%A - %d/%m/%Y") +" :\n"
             if Chemin.exists():
                 logs = open(Chemin)
                 lines = logs.readlines()
@@ -103,7 +104,7 @@ class CogManage(commands.Cog):
             if a !=3 :
                 dateStr = date.strftime("%d%m%Y")
                 Chemin = Path(f"./Logs/logs-{dateStr}.txt")
-                LogChain=date.strftime("%A - %d/%m/%Y") +" :"
+                LogChain=date.strftime("%A - %d/%m/%Y" ) +" :\n"
                 if Chemin.exists():
                     logs = open(Chemin)
                     lines = logs.readlines()

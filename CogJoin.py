@@ -3,7 +3,6 @@ from discord.utils import get
 class CogJoin(commands.Cog):
     def __inti__(self,bot,Manager):
         self.bot = bot
-        self._lastMemeber = None
         self.Manager = Manager
 
     async def addRoleNew(self,target):
@@ -15,7 +14,6 @@ class CogJoin(commands.Cog):
         channel= member.guild.system_channel
         if channel is not None:
             await channel.send(f'Bienvenue {member.mention}.')
-        self._lastMemeber = member
         await self.addRoleNew(member)
         await self.Manager.writeLogs(f"{member} as joined the server")
     

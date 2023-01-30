@@ -65,7 +65,9 @@ class CogRoleMenuG(commands.Cog):
         self.msgIdStatus = message.id
 
     async def MenuG(self,channel):
-        message = await channel.send(f"Réagissez pour recevoir un role pour les jeux auquels vous jouez :\n{self.dicoImg['LOL']} : `LOL`\n{self.dicoImg['YGO']} : `YGO`\n{self.dicoImg['APEX']} : `APEX`\n{self.dicoImg['FF']} : `FFXIV`\n{self.dicoImg['CIV']} : `CIV`")
+
+        message = await channel.send(f"Réagissez pour recevoir le role adéquat :\n{self.dicoImg['LOL']} : `LOL`\n{self.dicoImg['YGO']} : `YGO`\n{self.dicoImg['APEX']} : `APEX`\n{self.dicoImg['FF']} : `FFXIV`\n{self.dicoImg['CIV']} : `CIV`\n{self.dicoImg['Valo']} : `Valorant`")
+
         await message.add_reaction(self.dicoImg["LOL"])
         await message.add_reaction(self.dicoImg["YGO"])
         await message.add_reaction(self.dicoImg["FF"])
@@ -73,6 +75,9 @@ class CogRoleMenuG(commands.Cog):
 
         ## 07/12/2022 Added CIV role
         await message.add_reaction(self.dicoImg["CIV"])
+        
+        ## 30/01/2023 Added Valo role
+        await message.add_reaction(self.dicoImg["Valo"])
 
         self.msgIdGame = message.id
     

@@ -30,6 +30,9 @@ class CogRoleMenuG(commands.Cog):
 
         ## Added Civ role 06/12/2022
         self.dicoRole["CIV"] = get(self.guild.roles, name="CIV")
+        
+        ## Aded Valo role 30/01/2023
+        self.dicoRole["Valo"] = get(self.guild.roles, name="Valorant")
 
     async def setupDicoI(self):
         self.dicoImg["Member"] = self.bot.get_emoji(708637710608498698)
@@ -41,6 +44,9 @@ class CogRoleMenuG(commands.Cog):
 
         ## Added Civ role 06/12/2022
         self.dicoImg["CIV"] = self.bot.get_emoji(1049706958816546926)
+        
+        ## Aded Valo role 30/01/2023
+        self.dicoImg["Valo"] = self.bot.get_emoji(1069601356878463068)
 
         
     
@@ -97,7 +103,11 @@ class CogRoleMenuG(commands.Cog):
 
             ## Added Civ role 06/12/2022
             elif reaction == self.dicoImg["CIV"]:
-                await self.addRole(user,self.dicoRole["CIV"])    
+                await self.addRole(user,self.dicoRole["CIV"])   
+                
+            ## Added Valorant role 30/01/2023
+            elif reaction == self.dicoImg["Valo"]:
+                await self.addRole(user,self.dicoRole["Valo"])    
 
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self,payload):
@@ -116,7 +126,11 @@ class CogRoleMenuG(commands.Cog):
 
             ## Added Civ role 06/12/2022
             elif reaction == self.dicoImg["CIV"]:
-                await self.rmvRole(user,self.dicoRole["CIV"])   
+                await self.rmvRole(user,self.dicoRole["CIV"])
+                
+            ## Added Valorant role 30/01/2023
+            elif reaction == self.dicoImg["Valo"]:
+                await self.rmvRole(user,self.dicoRole["Valo"])    
             
 
                 

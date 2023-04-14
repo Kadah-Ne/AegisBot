@@ -80,6 +80,12 @@ class CogRoleMenuG(commands.Cog):
         ## 07/12/2022 Added CIV role
         await message.add_reaction(self.dicoImg["CIV"])
 
+        ## 07/12/2022 Added CIV role
+        await message.add_reaction(self.dicoImg["Valo"])
+
+        ## 07/12/2022 Added CIV role
+        await message.add_reaction(self.dicoImg["GGST"])
+
         self.msgIdGame = message.id
     
 

@@ -48,6 +48,12 @@ class CogRoleMenuG(commands.Cog):
         ## Added Civ role 06/12/2022
         self.dicoImg["CIV"] = self.bot.get_emoji(1049706958816546926)
 
+        ## Aded Valo role 30/01/2023
+        self.dicoImg["Valo"] = self.bot.get_emoji(1069601356878463068)
+
+        ## Added GGST Role 14/04/2022
+        self.dicoImg["GGST"] = self.bot.get_emoji(1096438707491451002)
+
         
     
     async def RoleM(self,channelG,channelR):
@@ -65,7 +71,7 @@ class CogRoleMenuG(commands.Cog):
         self.msgIdStatus = message.id
 
     async def MenuG(self,channel):
-        message = await channel.send(f"Réagissez pour recevoir le role adéquat :\n{self.dicoImg['LOL']} : `LOL`\n{self.dicoImg['YGO']} : `YGO`\n{self.dicoImg['APEX']} : `APEX`\n{self.dicoImg['FF']} : `FFXIV`\n{self.dicoImg['CIV']} : `CIV`")
+        message = await channel.send(f"Réagissez pour recevoir le role adéquat :\n{self.dicoImg['LOL']} : `LOL`\n{self.dicoImg['YGO']} : `YGO`\n{self.dicoImg['APEX']} : `APEX`\n{self.dicoImg['FF']} : `FFXIV`\n{self.dicoImg['CIV']} : `CIV`\n{self.dicoImg['Valo']} : `Valorant`\n{self.dicoImg['GGST']} : `Guilty Gear`")
         await message.add_reaction(self.dicoImg["LOL"])
         await message.add_reaction(self.dicoImg["YGO"])
         await message.add_reaction(self.dicoImg["FF"])

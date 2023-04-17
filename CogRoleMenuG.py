@@ -64,7 +64,7 @@ class CogRoleMenuG(commands.Cog):
         
     
     async def MenuR(self,channel):
-        message = await channel.send(f"Réagissez pour recevoir le role adéquat :\n{self.dicoImg['Member']} : `Membre du server`\n{self.dicoImg['Event']} : `Membre temporaire invité(e) pour un **Event**`")
+        message = await channel.send(f"Réagissez pour recevoir le role adéquat :\n{self.dicoImg['Member']} : `Membre du server`\n{self.dicoImg['Event']} : `Membre temporaire invité(e) pour un **Event**, restreint l'accès au server !`")
         await message.add_reaction(self.dicoImg["Member"])
         await message.add_reaction(self.dicoImg["Event"])
 

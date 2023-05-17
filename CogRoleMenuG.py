@@ -133,7 +133,7 @@ class CogRoleMenuG(commands.Cog):
 
             ## Added Striker Role 15/05/2023    
             elif reaction == self.dicoImg["Omega"]:
-                await self.addRole(user,self.dicoRole["Striker"]) 
+                await self.addRole(user,self.dicoRole["Omega"]) 
 
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self,payload):
@@ -164,7 +164,7 @@ class CogRoleMenuG(commands.Cog):
 
             ## Added Striker Role 15/05/2023 
             elif reaction == self.dicoImg["Omega"]:
-                await self.rmvRole(user,self.dicoRole["Striker"])  
+                await self.rmvRole(user,self.dicoRole["Omega"])  
 
                 
                 

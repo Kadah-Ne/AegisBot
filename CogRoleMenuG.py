@@ -38,7 +38,7 @@ class CogRoleMenuG(commands.Cog):
         self.dicoRole["GGST"] = get(self.guild.roles, name="GGST")
 
         ## Added Striker Role 15/05/2023
-        self.dicoRole["Omega"] = get(self.guild.roles, name="Omega")
+        self.dicoRole["Omega"] = get(self.guild.roles, name="Striker")
 
     async def setupDicoI(self):
         self.dicoImg["Member"] = self.bot.get_emoji(708637710608498698)
@@ -133,7 +133,7 @@ class CogRoleMenuG(commands.Cog):
 
             ## Added Striker Role 15/05/2023    
             elif reaction == self.dicoImg["Omega"]:
-                await self.addRole(user,self.dicoRole["Omega"]) 
+                await self.addRole(user,self.dicoRole["Striker"]) 
 
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self,payload):
@@ -164,7 +164,7 @@ class CogRoleMenuG(commands.Cog):
 
             ## Added Striker Role 15/05/2023 
             elif reaction == self.dicoImg["Omega"]:
-                await self.rmvRole(user,self.dicoRole["Omega"])  
+                await self.rmvRole(user,self.dicoRole["Striker"])  
 
                 
                 

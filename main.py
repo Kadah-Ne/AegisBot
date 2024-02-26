@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from CogJoin import CogJoin
 from CogRoleMenuG import CogRoleMenuG
 from CogManage import CogManage
+from CogFunStuff import CogFunStuff
 
 load_dotenv(dotenv_path="config")
 GUILD = int(getenv("GUILD")) #Server discord par defaut
@@ -21,10 +22,11 @@ bot = commands.Bot(command_prefix=Prefix,intents=intents)
 
 
 
-async def setup(bot,Setuper,RoleGame,Manager):
+async def setup(bot,Setuper,RoleGame,Manager,Funny):
     bot.add_cog(Setuper)
     bot.add_cog(RoleGame)
     bot.add_cog(Manager)
+    bot.add_cog(Funny)
     
 @bot.event
 async def on_ready():
@@ -36,7 +38,8 @@ async def on_ready():
     Manager = CogManage(bot,guild)
     Setuper = CogJoin(bot,Manager)
     RoleGame = CogRoleMenuG(bot,guild,Manager)
-    await setup(bot,Setuper,RoleGame,Manager)
+    Funny = CogFunStuff(bot)
+    await setup(bot,Setuper,RoleGame,Manager,Funny)
     await Manager.DELETE(FChannel)
     await Manager.DELETE(GChannel)
     await RoleGame.RoleM(bot.get_channel(GChannel),bot.get_channel(FChannel))

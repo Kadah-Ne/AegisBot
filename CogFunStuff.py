@@ -8,7 +8,7 @@ class CogFunStuff(commands.Cog):
         self.bot = bot
         
     
-    @commands.command (name="promote", aliases = ["Promote"])
+    @commands.command (name="roll", aliases = ["Roll","rolls","Rolls"])
     async def roll(self,ctx,die : str):
         sides = int(die.trim("d",flags=die.IGNORECASE)[0])
         number = random.randint(1,sides)

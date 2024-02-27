@@ -10,7 +10,7 @@ class CogFunStuff(commands.Cog):
         self.bot = bot
         
     
-    @commands.command (name="roll", aliases = ["Roll","rolls","Rolls"])
+    @commands.command (name="roll", aliases = ["Roll","rolls","Rolls","r","R"])
     async def roll(self,ctx,die : str):
         die = die.replace(" ","")
         mod = -1
@@ -33,13 +33,14 @@ class CogFunStuff(commands.Cog):
         try :
             
             sides = int(sides)
-            math.sqrt(sides)
+
             if mod != -1:
                 mod = int(mod)
             if (re.split("d",die,flags=re.IGNORECASE)[0]) :
                  
                 occ = int(re.split("d",die,flags=re.IGNORECASE)[0])
-            
+                if occ < 0 :
+                    raise Exception("Fuck You")
             number = 0
             if occ == -1:
                 occ = 1

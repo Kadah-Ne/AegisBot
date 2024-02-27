@@ -45,7 +45,6 @@ class CogFunStuff(commands.Cog):
                 textchain = ""
                 for i in numlist: 
                         textchain += f"+ {i} "
-                    
                 
                 textchain = textchain[0:]
                 await ctx.channel.send(f"you rolled a {number}({textchain} {item} {mod}) on the D{sides}")

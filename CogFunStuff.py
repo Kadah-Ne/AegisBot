@@ -3,6 +3,7 @@ from discord.utils import get
 import re
 import random
 import discord
+import math
 
 class CogFunStuff(commands.Cog):
     def __init__(self,bot):
@@ -32,7 +33,7 @@ class CogFunStuff(commands.Cog):
         try :
             
             sides = int(sides)
-            
+            math.sqrt(sides)
             if mod != -1:
                 mod = int(mod)
             if (re.split("d",die,flags=re.IGNORECASE)[0]) :

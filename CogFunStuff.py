@@ -10,6 +10,7 @@ class CogFunStuff(commands.Cog):
     
     @commands.command (name="roll", aliases = ["Roll","rolls","Rolls"])
     async def roll(self,ctx,die : str):
+        await ctx.channel.send("Test")
         sides = int(die.trim("d",flags=die.IGNORECASE)[0])
         number = random.randint(1,sides)
         await ctx.channel.send(f"you rolled a {number} on the D{sides}")

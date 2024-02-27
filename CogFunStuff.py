@@ -34,11 +34,10 @@ class CogFunStuff(commands.Cog):
                 rand = random.randint(1,sides)
                 numlist.append(rand)
                 number += rand
-            match item:
-                case "+" :
-                    number += mod
-                case "-" :
-                    number -= mod
+            if item == "+":
+                number += mod
+            elif item == "-" :
+                number -= mod
 
             if occ == 1 :
                 numlist.sort()

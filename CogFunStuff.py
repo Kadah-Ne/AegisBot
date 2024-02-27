@@ -39,12 +39,12 @@ class CogFunStuff(commands.Cog):
             if (re.split("d",die,flags=re.IGNORECASE)[0]) :
                  
                 occ = int(re.split("d",die,flags=re.IGNORECASE)[0])
-                if occ < 0 :
-                    raise Exception("Fuck You")
+                
             number = 0
             if occ == -1:
                 occ = 1
-            
+            if occ < 1 :
+                raise Exception("Fuck You")
             for i in range (occ):
                 rand = random.randint(1,sides)
                 numlist.append(rand)

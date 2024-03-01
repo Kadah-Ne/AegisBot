@@ -33,6 +33,8 @@ class CogFunStuff(commands.Cog):
         try :
             
             sides = int(sides)
+            if sides >= 2000:
+                raise Exception("Fuckyou")
 
             if mod != -1:
                 mod = int(mod)
@@ -43,7 +45,7 @@ class CogFunStuff(commands.Cog):
             number = 0
             if occ == -1:
                 occ = 1
-            if occ < 1 :
+            if occ < 1 or occ >=1000 :
                 raise Exception("Fuck You")
             for i in range (occ):
                 rand = random.randint(1,sides)

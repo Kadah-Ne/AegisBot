@@ -19,9 +19,11 @@ class CogFunStuff(commands.Cog):
         opp = ""
         kh3 = False
         splitD = re.split("d",trimmed,flags=re.IGNORECASE)
-        sides_mods = splitD[-1]
-        if "kh3" in sides_mods.lower:
+        sides_mods = splitD[-1].lower()
+   
+        if "kh3" in sides_mods:
             kh3 = True
+            sides_mods = sides_mods.replace("kh3","")
         occ = splitD[0]
 
         if sides_mods.__contains__('+'):
@@ -94,9 +96,20 @@ class CogFunStuff(commands.Cog):
                         else :
                             await ctx.channel.send(f"you rolled a {number} : ({textchain}{item}[{mod}]) on the {occ} D{sides}")
                 else :
-                    newList = numlist[-3:-1]
+                    newList = numlist[-3:]
+                
+                for i in newList: 
+                        textchain += f"+{i}"
+                textchain = textchain[1:]
+                if item == "":
                     number = sum(newList)
                     await ctx.channel.send(f"your 3 highest rolls did {number} : ({textchain}) on the {occ} D{sides}")
+                else : 
+                    if item == "+" :
+                        number = sum(newList)+mod
+                    else:
+                        number = sum(newList)-mod
+                    await ctx.channel.send(f"you rolled a {number} : ({textchain}{item}[{mod}]) on the {occ} D{sides}")
         except :
             await ctx.channel.send("Utilisez le format [x]D[y]+/-[z] pour la commande ou x,y et z sont des nombres entiers")
         

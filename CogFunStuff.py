@@ -9,27 +9,39 @@ class CogFunStuff(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
         
+    def rollDie(self,dice:int) :
+        return random.randint(1,dice)
     
+    def splitCommande(self,input):
+        trimmed = input.replace(" ","")
+        mod = -1
+        occ = -1
+        opp = ""
+        kh3 = False
+        splitD = re.split("d",trimmed,flags=re.IGNORECASE)
+        sides_mods = splitD[-1]
+        if "kh3" in sides_mods.lower:
+            kh3 = True
+        occ = splitD[0]
+
+        if sides_mods.__contains__('+'):
+            sides = sides_mods.split("+")[0]
+            mod = sides_mods.split("+")[-1]
+            opp = "+"
+        elif sides_mods.__contains__('-'):
+            sides = sides_mods.split("-")[0]
+            mod = sides_mods.split("-")[-1]
+            opp = "-"
+        else : 
+            sides = re.split("-",sides_mods,flags=re.IGNORECASE)[0]
+        
+        return(mod,occ,opp,sides,kh3)
+
     @commands.command (name="roll", aliases = ["Roll","rolls","Rolls","r","R"])
     async def roll(self,ctx,die : str):
-        die = die.replace(" ","")
-        mod = -1
         numlist = []
-        occ = -1
-        item =""
-        sides_mod = re.split("d",die,flags=re.IGNORECASE)[-1]
- 
-        if sides_mod.__contains__('+'):
-            sides = sides_mod.split("+")[0]
-            mod = sides_mod.split("+")[-1]
-            item = "+"
-        elif sides_mod.__contains__('-'):
-            sides = sides_mod.split("-")[0]
-            mod = sides_mod.split("-")[-1]
-            item = "-"
-        else : 
-            sides = re.split("-",sides_mod,flags=re.IGNORECASE)[0]
-        
+        mod,occ,item,sides,kh3 = self.splitCommande(die)
+
         try :
             
             sides = int(sides)
@@ -48,7 +60,7 @@ class CogFunStuff(commands.Cog):
             if occ < 1 or occ >=1000 :
                 raise Exception("Fuck You")
             for i in range (occ):
-                rand = random.randint(1,sides)
+                rand = self.rollDie(sides)
                 numlist.append(rand)
                 number += rand
             if item == "+":
@@ -65,21 +77,28 @@ class CogFunStuff(commands.Cog):
             else : 
                 numlist.sort()
                 textchain = ""
-                for i in numlist: 
-                        textchain += f"+{i}"
-                
-                textchain = textchain[1:]
-                print(textchain)
-                if len(textchain) > 1500:
-                    if item == "":
-                        await ctx.channel.send(f"you rolled a {number} on the {occ} D{sides}")
+                if not kh3 :
+                    for i in numlist: 
+                            textchain += f"+{i}"
+                    
+                    textchain = textchain[1:]
+                    
+                    if len(textchain) > 1500:
+                        if item == "":
+                            await ctx.channel.send(f"you rolled a {number} on the {occ} D{sides}")
+                        else :
+                            await ctx.channel.send(f"you rolled a {number} on the {occ} D{sides}")
                     else :
-                        await ctx.channel.send(f"you rolled a {number} on the {occ} D{sides}")
+                        if item == "":
+                            await ctx.channel.send(f"you rolled a {number} : ({textchain}) on the {occ} D{sides}")
+                        else :
+                            await ctx.channel.send(f"you rolled a {number} : ({textchain}{item}[{mod}]) on the {occ} D{sides}")
                 else :
-                    if item == "":
-                        await ctx.channel.send(f"you rolled a {number} : ({textchain}) on the {occ} D{sides}")
-                    else :
-                        await ctx.channel.send(f"you rolled a {number} : ({textchain}{item}[{mod}]) on the {occ} D{sides}")
+                    newList = numlist[-3:-1]
+                    number = sum(newList)
+                    await ctx.channel.send(f"your 3 highest rolls did {number} : ({textchain}) on the {occ} D{sides}")
         except :
             await ctx.channel.send("Utilisez le format [x]D[y]+/-[z] pour la commande ou x,y et z sont des nombres entiers")
+        
+    
         

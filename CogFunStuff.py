@@ -81,7 +81,7 @@ class CogFunStuff(commands.Cog):
                 textchain = ""
                 if not kh3 :
                     for i in numlist: 
-                            textchain += f"+{i}"
+                        textchain += f"+{i}"
                     
                     textchain = textchain[1:]
                     
@@ -98,18 +98,18 @@ class CogFunStuff(commands.Cog):
                 else :
                     newList = numlist[-3:]
                 
-                for i in newList: 
-                        textchain += f"+{i}"
-                textchain = textchain[1:]
-                if item == "":
-                    number = sum(newList)
-                    await ctx.channel.send(f"your 3 highest rolls did {number} : ({textchain}) on the {occ} D{sides}")
-                else : 
-                    if item == "+" :
-                        number = sum(newList)+mod
-                    else:
-                        number = sum(newList)-mod
-                    await ctx.channel.send(f"your 3 highest rolls did {number} : ({textchain}{item}[{mod}]) on the {occ} D{sides}")
+                    for i in newList: 
+                            textchain += f"+{i}"
+                    textchain = textchain[1:]
+                    if item == "":
+                        number = sum(newList)
+                        await ctx.channel.send(f"your 3 highest rolls did {number} : ({textchain}) on the {occ} D{sides}")
+                    else : 
+                        if item == "+" :
+                            number = sum(newList)+mod
+                        else:
+                            number = sum(newList)-mod
+                        await ctx.channel.send(f"your 3 highest rolls did {number} : ({textchain}{item}[{mod}]) on the {occ} D{sides}")
         except :
             await ctx.channel.send("Utilisez le format [x]D[y]+/-[z] pour la commande ou x,y et z sont des nombres entiers")
         

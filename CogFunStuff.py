@@ -109,7 +109,7 @@ class CogFunStuff(commands.Cog):
                         number = sum(newList)+mod
                     else:
                         number = sum(newList)-mod
-                    await ctx.channel.send(f"you rolled a {number} : ({textchain}{item}[{mod}]) on the {occ} D{sides}")
+                    await ctx.channel.send(f"your 3 highest rolls did {number} : ({textchain}{item}[{mod}]) on the {occ} D{sides}")
         except :
             await ctx.channel.send("Utilisez le format [x]D[y]+/-[z] pour la commande ou x,y et z sont des nombres entiers")
         

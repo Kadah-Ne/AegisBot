@@ -41,6 +41,7 @@ class CogFunStuff(commands.Cog):
 
     @commands.command (name="roll", aliases = ["Roll","rolls","Rolls","r","R"])
     async def roll(self,ctx,die : str):
+        await ctx.channel.send(die)
         numlist = []
         mod,occ,item,sides,kh3 = self.splitCommande(die)
 
@@ -51,14 +52,12 @@ class CogFunStuff(commands.Cog):
                 raise Exception("Fuckyou")
 
             if mod != -1:
-                mod = int(mod)
-            if (re.split("d",die,flags=re.IGNORECASE)[0]) :
-                 
-                occ = int(re.split("d",die,flags=re.IGNORECASE)[0])
-                
+                mod = int(mod)                       
             number = 0
             if occ == -1:
                 occ = 1
+            else:
+                occ = int(occ)
             if occ < 1 or occ >=1000 :
                 raise Exception("Fuck You")
             for i in range (occ):
@@ -86,10 +85,7 @@ class CogFunStuff(commands.Cog):
                     textchain = textchain[1:]
                     
                     if len(textchain) > 1500:
-                        if item == "":
-                            await ctx.channel.send(f"you rolled a {number} on the {occ} D{sides}")
-                        else :
-                            await ctx.channel.send(f"you rolled a {number} on the {occ} D{sides}")
+                        await ctx.channel.send(f"you rolled a {number} on the {occ} D{sides}")
                     else :
                         if item == "":
                             await ctx.channel.send(f"you rolled a {number} : ({textchain}) on the {occ} D{sides}")

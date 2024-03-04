@@ -41,8 +41,7 @@ class CogFunStuff(commands.Cog):
 
     @commands.command (name="roll", aliases = ["Roll","rolls","Rolls","r","R"])
     async def roll(self,ctx,* die : str):
-        die = die.join('')
-        print(die)
+        die = ''.join([str(ele) + '' for ele in die])
         await ctx.channel.send(die)
         numlist = []
         mod,occ,item,sides,kh3 = self.splitCommande(die)

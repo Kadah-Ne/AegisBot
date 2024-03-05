@@ -115,9 +115,9 @@ class CogFunStuff(commands.Cog):
                         else:
                             number = sum(newList)-mod
                         if kh > -1 :
-                            await ctx.channel.send(f"your {kh} highest rolls did {number} : ({textchain}) on the {occ} D{sides}")
+                            await ctx.channel.send(f"your {kh} highest rolls did {number} : ({textchain})[{item}{mod}] on the {occ} D{sides}")
                         else : 
-                            await ctx.channel.send(f"your {kl} lowest rolls did {number} : ({textchain}) on the {occ} D{sides}")
+                            await ctx.channel.send(f"your {kl} lowest rolls did {number} : ({textchain})[{item}{mod}] on the {occ} D{sides}")
         except :
             await ctx.channel.send("Utilisez le format [x]D[y]+/-[z] pour la commande ou x,y et z sont des nombres entiers")
         

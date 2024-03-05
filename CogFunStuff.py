@@ -94,7 +94,9 @@ class CogFunStuff(commands.Cog):
                         else :
                             await ctx.channel.send(f"you rolled a {number} : ({textchain}{item}[{mod}]) on the {occ} D{sides}")
                 else :
-                    if int(kh) > -1 :
+                    kh = int(kh)
+                    kl = int(kl)
+                    if kh > -1 :
                         newList = numlist[-1*int(kh):]
                     else :
                         newList = numlist[:int(kl)]

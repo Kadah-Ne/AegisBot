@@ -97,7 +97,7 @@ class CogFunStuff(commands.Cog):
                     if kh > -1 :
                         newList = numlist[-1*int(kh):]
                     else :
-                        newList = numlist[int(kl):]
+                        newList = numlist[:int(kl)]
                     for i in newList: 
                             textchain += f"+{i}"
                     textchain = textchain[1:]

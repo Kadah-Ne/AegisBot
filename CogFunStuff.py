@@ -100,8 +100,11 @@ class CogFunStuff(commands.Cog):
                         newList = numlist[-1*int(kh):]
                     else :
                         newList = numlist[:int(kl)]
-                    for i in newList: 
-                            textchain += f"+{i}"
+                    for i in numlist:
+                            if i in newList : 
+                                textchain += f"+{i}"
+                            else :
+                                textchain += f"+~~{i}~~"
                     textchain = textchain[1:]
                     if item == "":
                         number = sum(newList)

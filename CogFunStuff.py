@@ -80,7 +80,7 @@ class CogFunStuff(commands.Cog):
             else : 
                 numlist.sort()
                 textchain = ""
-                if (kh == -1 and kl == -1) or (numlist.__len__ < kh or numlist.__len__ < kl) :
+                if (kh == -1 and kl == -1) or (len(numlist) < (kh) or len(numlist) < int(kl)) :
                     for i in numlist: 
                         textchain += f"+{i}"
                     

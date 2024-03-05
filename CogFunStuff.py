@@ -100,9 +100,11 @@ class CogFunStuff(commands.Cog):
                         newList = numlist[-1*int(kh):]
                     else :
                         newList = numlist[:int(kl)]
+                    showlist = newList
                     for i in numlist:
-                            if i in newList : 
+                            if i in showlist : 
                                 textchain += f"+{i}"
+                                showlist.pop(i)
                             else :
                                 textchain += f"+~~{i}~~"
                     textchain = textchain[1:]

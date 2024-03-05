@@ -18,11 +18,14 @@ class CogFunStuff(commands.Cog):
         occ = -1
         opp = ""
         kh = -1
+        kl = -1
         splitD = re.split("d",trimmed,flags=re.IGNORECASE)
         sides_mods = splitD[-1].lower()
    
         if "kh" in sides_mods:
             sides_mods,kh = sides_mods.split("kh")
+        elif 'kl' in sides_mods :
+            sides_mods,kl = sides_mods.split("kl")
         occ = splitD[0]
 
         if sides_mods.__contains__('+'):
@@ -36,13 +39,13 @@ class CogFunStuff(commands.Cog):
         else : 
             sides = re.split("-",sides_mods,flags=re.IGNORECASE)[0]
         
-        return(mod,occ,opp,sides,kh)
+        return(mod,occ,opp,sides,kh,kl)
 
     @commands.command (name="roll", aliases = ["Roll","rolls","Rolls","r","R"])
     async def roll(self,ctx,* die : str):
         die = ''.join([str(ele) + '' for ele in die])
         numlist = []
-        mod,occ,item,sides,kh = self.splitCommande(die)
+        mod,occ,item,sides,kh,kl = self.splitCommande(die)
 
         try :
             
@@ -77,7 +80,7 @@ class CogFunStuff(commands.Cog):
             else : 
                 numlist.sort()
                 textchain = ""
-                if kh == -1 :
+                if kh == -1 and kl == -1 :
                     for i in numlist: 
                         textchain += f"+{i}"
                     
@@ -91,20 +94,28 @@ class CogFunStuff(commands.Cog):
                         else :
                             await ctx.channel.send(f"you rolled a {number} : ({textchain}{item}[{mod}]) on the {occ} D{sides}")
                 else :
-                    newList = numlist[-1*kh:]
-                
+                    if kh > -1 :
+                        newList = numlist[-1*int(kh):]
+                    else :
+                        newList = numlist[int(kl):]
                     for i in newList: 
                             textchain += f"+{i}"
                     textchain = textchain[1:]
                     if item == "":
                         number = sum(newList)
-                        await ctx.channel.send(f"your {kh} highest rolls did {number} : ({textchain}) on the {occ} D{sides}")
+                        if kh > -1 :
+                            await ctx.channel.send(f"your {kh} highest rolls did {number} : ({textchain}) on the {occ} D{sides}")
+                        else : 
+                            await ctx.channel.send(f"your {kl} lowest rolls did {number} : ({textchain}) on the {occ} D{sides}")
                     else : 
                         if item == "+" :
                             number = sum(newList)+mod
                         else:
                             number = sum(newList)-mod
-                        await ctx.channel.send(f"your {kh} highest rolls did {number} : ({textchain}{item}[{mod}]) on the {occ} D{sides}")
+                        if kh > -1 :
+                            await ctx.channel.send(f"your {kh} highest rolls did {number} : ({textchain}) on the {occ} D{sides}")
+                        else : 
+                            await ctx.channel.send(f"your {kl} lowest rolls did {number} : ({textchain}) on the {occ} D{sides}")
         except :
             await ctx.channel.send("Utilisez le format [x]D[y]+/-[z] pour la commande ou x,y et z sont des nombres entiers")
         

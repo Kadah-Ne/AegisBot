@@ -17,13 +17,12 @@ class CogFunStuff(commands.Cog):
         mod = -1
         occ = -1
         opp = ""
-        kh3 = False
+        kh = -1
         splitD = re.split("d",trimmed,flags=re.IGNORECASE)
         sides_mods = splitD[-1].lower()
    
-        if "kh3" in sides_mods:
-            kh3 = True
-            sides_mods = sides_mods.replace("kh3","")
+        if "kh" in sides_mods:
+            sides_mods,kh = sides_mods.split("kh")
         occ = splitD[0]
 
         if sides_mods.__contains__('+'):
@@ -37,13 +36,13 @@ class CogFunStuff(commands.Cog):
         else : 
             sides = re.split("-",sides_mods,flags=re.IGNORECASE)[0]
         
-        return(mod,occ,opp,sides,kh3)
+        return(mod,occ,opp,sides,kh)
 
     @commands.command (name="roll", aliases = ["Roll","rolls","Rolls","r","R"])
     async def roll(self,ctx,* die : str):
         die = ''.join([str(ele) + '' for ele in die])
         numlist = []
-        mod,occ,item,sides,kh3 = self.splitCommande(die)
+        mod,occ,item,sides,kh = self.splitCommande(die)
 
         try :
             
@@ -54,7 +53,7 @@ class CogFunStuff(commands.Cog):
             if mod != -1:
                 mod = int(mod)                       
             number = 0
-            if occ == -1:
+            if occ == "":
                 occ = 1
             else:
                 occ = int(occ)
@@ -78,7 +77,7 @@ class CogFunStuff(commands.Cog):
             else : 
                 numlist.sort()
                 textchain = ""
-                if not kh3 :
+                if kh == -1 :
                     for i in numlist: 
                         textchain += f"+{i}"
                     
@@ -92,20 +91,20 @@ class CogFunStuff(commands.Cog):
                         else :
                             await ctx.channel.send(f"you rolled a {number} : ({textchain}{item}[{mod}]) on the {occ} D{sides}")
                 else :
-                    newList = numlist[-3:]
+                    newList = numlist[-1*kh:]
                 
                     for i in newList: 
                             textchain += f"+{i}"
                     textchain = textchain[1:]
                     if item == "":
                         number = sum(newList)
-                        await ctx.channel.send(f"your 3 highest rolls did {number} : ({textchain}) on the {occ} D{sides}")
+                        await ctx.channel.send(f"your {kh} highest rolls did {number} : ({textchain}) on the {occ} D{sides}")
                     else : 
                         if item == "+" :
                             number = sum(newList)+mod
                         else:
                             number = sum(newList)-mod
-                        await ctx.channel.send(f"your 3 highest rolls did {number} : ({textchain}{item}[{mod}]) on the {occ} D{sides}")
+                        await ctx.channel.send(f"your {kh} highest rolls did {number} : ({textchain}{item}[{mod}]) on the {occ} D{sides}")
         except :
             await ctx.channel.send("Utilisez le format [x]D[y]+/-[z] pour la commande ou x,y et z sont des nombres entiers")
         

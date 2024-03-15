@@ -111,7 +111,7 @@ class CogFunStuff(commands.Cog):
                 await ctx.channel.send("Ici")
                 if len(re.findall(r'\+\d*',die)) > 0 :
                     mod = re.findall(r'\+\d*',die)[0]
-                await ctx.channel.send("Là")                    
+                await ctx.channel.send(outputs[die])                    
                 finalTxt += f"{outputs[die][0]} : {outputs[die][1]}{mod} \n"
                 
             await ctx.channel.send(finalTxt)

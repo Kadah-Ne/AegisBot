@@ -71,6 +71,7 @@ class CogFunStuff(commands.Cog):
             number -= mod
 
         if occ == 1 :
+            
             textchain = str(numlist[0])
             return [number,textchain]
         else : 
@@ -104,6 +105,7 @@ class CogFunStuff(commands.Cog):
         die = ''.join([str(ele) + '' for ele in die])
         try :
             outputs = self.splitCommande(die)
+            await ctx.channel.send("Ici")
             finalTxt = ""
             for die in outputs :
                 mod = ""

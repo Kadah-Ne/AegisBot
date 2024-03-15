@@ -96,6 +96,7 @@ class CogFunStuff(commands.Cog):
                     newList = numlist[:int(kl)]
                 for i in newList: 
                         textchain += f"+{i}"
+                number = sum(newList)
                 textchain = textchain[1:]
                 return [number,textchain]
         

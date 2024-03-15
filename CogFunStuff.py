@@ -111,9 +111,11 @@ class CogFunStuff(commands.Cog):
                 mod = ""
                 
                 if len(re.findall(r'\+\d*',die)) > 0 :
-                    mod = re.findall(r'\+\d*',die)[0]                 
-                finalTxt += f"{outputs[die][0]} : {outputs[die][1]}{mod} on the {die}\n"
-                
+                    mod = re.findall(r'\+\d*',die)[0]
+                if len(outputs[die]) == 2 :              
+                    finalTxt += f"{outputs[die][0]} : {outputs[die][1]}{mod} on the {die}\n"
+                else : 
+                    finalTxt += f"{outputs[die][0]}{mod} on the {die}\n"
             await ctx.channel.send(finalTxt)
             
         except :

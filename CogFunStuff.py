@@ -105,13 +105,13 @@ class CogFunStuff(commands.Cog):
         die = ''.join([str(ele) + '' for ele in die])
         try :
             outputs = self.splitCommande(die)
-            finalTxt = ""
+            finalTxt = "Summary of your roll :\n"
             for die in outputs :
                 mod = ""
                 
                 if len(re.findall(r'\+\d*',die)) > 0 :
                     mod = re.findall(r'\+\d*',die)[0]                 
-                finalTxt += f"{outputs[die][0]} : {outputs[die][1]}{mod} \n"
+                finalTxt += f"{outputs[die][0]} : {outputs[die][1]}{mod} on the {die}\n"
                 
             await ctx.channel.send(finalTxt)
             

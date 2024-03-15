@@ -69,7 +69,7 @@ class CogFunStuff(commands.Cog):
             number += mod
         elif item == "-" :
             number -= mod
-        
+
         if occ == 1 :
             textchain = str(numlist[0])
             return [number,textchain]
@@ -109,7 +109,6 @@ class CogFunStuff(commands.Cog):
                 mod = ""
                 if len(re.findall(r'\+\d*',die)) > 0 :
                     mod = re.findall(r'\+\d*',die)[0]
-                
                 finalTxt += f"{outputs[die][0]} : {outputs[die][1]}{mod} \n"
             await ctx.channel.send(finalTxt)
             

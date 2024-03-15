@@ -46,7 +46,7 @@ class CogFunStuff(commands.Cog):
         return(outputs)
                 
     
-    async def rollMyDie(self,mod,occ,item,sides,kh,kl) :
+    def rollMyDie(self,mod,occ,item,sides,kh,kl) :
         numlist = []           
         sides = int(sides)
         if sides >= 2000:

@@ -105,11 +105,11 @@ class CogFunStuff(commands.Cog):
         die = ''.join([str(ele) + '' for ele in die])
         try :
             outputs = self.splitCommande(die)
-            await ctx.channel.send("Ici")
             finalTxt = ""
             for die in outputs :
                 mod = ""
                 if len(re.findall(r'\+\d*',die)) > 0 :
+                    await ctx.channel.send("Ici")
                     mod = re.findall(r'\+\d*',die)[0]
                 finalTxt += f"{outputs[die][0]} : {outputs[die][1]}{mod} \n"
             await ctx.channel.send(finalTxt)

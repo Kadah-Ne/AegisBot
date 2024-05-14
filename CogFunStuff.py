@@ -139,7 +139,10 @@ class CogFunStuff(commands.Cog):
         msgs = [msg async for msg in channel.history(oldest_first=False)]
         listCita = []
         for i in msgs:
-            listCita.append(i.content)
+            contenue = i.content
+            if(i.attachments != []):
+                contenue+= f" {i.attachments[0]}"
+            listCita.append(contenue)
         return listCita
 
             

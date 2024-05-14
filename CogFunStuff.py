@@ -127,7 +127,7 @@ class CogFunStuff(commands.Cog):
     async def inspiration(self,ctx):
         listQuotes = ["Shoot for the moon! Even if you miss, you'll... something... something... stars!","You know who you remind me of? Me!","You've got a great personality!","You're doing pretty well!","You must be great -- you're hanging out with me!","You're not the ugliest person I've ever met!","NEVER limit yourself!","Hey... player...! You're really good at this game!","It's in our moments of decision that destiny is shaped!","You're -- uh -- special?","Follow your hearts... and stuff.","Don't belive in yourself, believe in me because I believe in you!","It's Cute That You All Think You're The Heroes Of This Little Adventure, But, You're Not.","I Just Bought A Pony Made Of Diamonds Because I'm Rich.","These Pretzels Suck!","Vault Hunter Looks For The New Vault. Vault Hunter Gets Killed. By Me. Seeing The Problem Here?","This Guy Rushes Me With A Spoon... A Freakin' Spoon!","Stop Shooting Yourself, Stop Shooting Yourself!!","Never Meet Your heroes, Kid, They're All Dicks. Every Last One.","Jimmy, Please Make A Note: I'm Strangling Mister Moorin For Bringing Up My Wife.","Too many people die.’ Give me a break. That’s what people DO!"]
         choiceCitations = random.choice(await self.getCitations())
-        if(random.randint(1,10)>7):
+        if(random.randint(1,100) > 85 ):
             await ctx.channel.send(f"{random.choice(listQuotes)}")
         else:
             await ctx.channel.send(f"{choiceCitations}")

@@ -14,7 +14,7 @@ GUILD = int(getenv("GUILD")) #Server discord par defaut
 FChannel = int(getenv("ARRIVALCHANNEL"))
 GChannel = int(getenv("GAMECHANNEL"))
 Prefix = getenv("DEFAULTPREFIX")
-client = discord.Client()
+# client = discord.Client()
 intents = discord.Intents.all()
 TOKEN = str(getenv("TOKENP1") + getenv("TOKENP2"))
 bot = commands.Bot(command_prefix=Prefix,intents=intents)

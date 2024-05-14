@@ -51,6 +51,7 @@ class CogManage(commands.Cog):
         messages = await channel.history(limit=nb).flatten()
         for i in messages:
             await i.delete()
+            
 
     @commands.command (name = "Prefix", aliases = ["prefix","p","P"])
     @commands.has_role('Staff')

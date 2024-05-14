@@ -125,8 +125,20 @@ class CogFunStuff(commands.Cog):
     @commands.command(name="inspiration", aliases = ["inspi","Inspiration","Inspi"])
     async def inspiration(self,ctx):
         listQuotes = ["Shoot for the moon! Even if you miss, you'll... something... something... stars!","You know who you remind me of? Me!","You've got a great personality!","You're doing pretty well!","You must be great -- you're hanging out with me!","You're not the ugliest person I've ever met!","NEVER limit yourself!","Hey... player...! You're really good at this game!","It's in our moments of decision that destiny is shaped!","You're -- uh -- special?","Follow your hearts... and stuff.","Don't belive in yourself, believe in me because I believe in you!"]
-        await ctx.channel.send(f"{random.choice(listQuotes)}")       
+        listCitations = self.getCitations()
+        choiceCitation = random.choice(listCitations)
+        # await ctx.channel.send(f"{random.choice(listQuotes)}")       
+        await ctx.channel.send(f"{choiceCitation.content}")
         await ctx.channel.send(f"https://tenor.com/view/borderlands-inspired-skill-borderlands-inspired-gif-20917083")
+
+    async def getCitations(self):
+        channelId = 772904165189222410
+        channel = self.bot.get_channel(channelId)
+        messages = await channel.history().flatten()
+        return messages
+        
+            
+
         
     
         

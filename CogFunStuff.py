@@ -132,8 +132,7 @@ class CogFunStuff(commands.Cog):
         await ctx.channel.send(f"https://tenor.com/view/borderlands-inspired-skill-borderlands-inspired-gif-20917083")
 
     async def getCitations(self):
-        # channelId = 772904165189222410
-        channelId = 1161931213389443072
+        channelId = 772904165189222410
         channel = self.bot.get_channel(channelId)
         msgs = [msg async for msg in channel.history(oldest_first=False)]
         listCita = []

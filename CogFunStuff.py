@@ -131,7 +131,10 @@ class CogFunStuff(commands.Cog):
             await ctx.channel.send(f"{random.choice(listQuotes)}")
         else:
             await ctx.channel.send(f"{choiceCitations}")
-        await ctx.channel.send(f"https://tenor.com/view/borderlands-inspired-skill-borderlands-inspired-gif-20917083")
+        if(random.randint(1,100) > 95 ):
+            await ctx.channel.send(f"https://i.ytimg.com/vi/PjNsUrr497c/maxresdefault.jpg")
+        else:
+            await ctx.channel.send(f"https://tenor.com/view/borderlands-inspired-skill-borderlands-inspired-gif-20917083")
 
     async def getCitations(self):
         channelId = 772904165189222410

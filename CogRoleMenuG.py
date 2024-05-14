@@ -40,6 +40,9 @@ class CogRoleMenuG(commands.Cog):
         ## Added Striker Role 15/05/2023
         self.dicoRole["Omega"] = get(self.guild.roles, name="Striker")
 
+        ## Added Grindframe Role 10/10/2023
+        self.dicoRole["WF"] = get(self.guild.roles, name="GrindFrame")
+
     async def setupDicoI(self):
         self.dicoImg["Member"] = self.bot.get_emoji(708637710608498698)
         self.dicoImg["Event"] = self.bot.get_emoji(864745278685970452)
@@ -59,7 +62,10 @@ class CogRoleMenuG(commands.Cog):
 
         ## Added Striker Role 15/05/2023
         self.dicoImg["Omega"] = self.bot.get_emoji(1103284633954680842)
-    
+
+        ## Added Grindframe Role 10/10/2023
+        self.dicoImg["WF"] = self.bot.get_emoji(1161221507465355265)
+
     async def RoleM(self,channelG,channelR):
         await self.setupDicoI()
         await self.setupDicoR()
@@ -75,7 +81,7 @@ class CogRoleMenuG(commands.Cog):
         self.msgIdStatus = message.id
 
     async def MenuG(self,channel):
-        message = await channel.send(f"Réagissez pour recevoir le role adéquat :\n{self.dicoImg['LOL']} : `LOL`\n{self.dicoImg['YGO']} : `YGO`\n{self.dicoImg['APEX']} : `APEX`\n{self.dicoImg['FF']} : `FFXIV`\n{self.dicoImg['CIV']} : `CIV`\n{self.dicoImg['Valo']} : `Valorant`\n{self.dicoImg['GGST']} : `Guilty Gear`\n{self.dicoImg['Omega']} : `Omega Stiker`")
+        message = await channel.send(f"Réagissez pour recevoir le role adéquat :\n{self.dicoImg['LOL']} : `LOL`\n{self.dicoImg['YGO']} : `YGO`\n{self.dicoImg['APEX']} : `APEX`\n{self.dicoImg['FF']} : `FFXIV`\n{self.dicoImg['CIV']} : `CIV`\n{self.dicoImg['Valo']} : `Valorant`\n{self.dicoImg['GGST']} : `Guilty Gear`\n{self.dicoImg['Omega']} : `Omega Stiker`\n{self.dicoImg['WF']} : `Warframe`")
         await message.add_reaction(self.dicoImg["LOL"])
         await message.add_reaction(self.dicoImg["YGO"])
         await message.add_reaction(self.dicoImg["FF"])
@@ -93,7 +99,9 @@ class CogRoleMenuG(commands.Cog):
         ## Added Striker Role 15/05/2023
         await message.add_reaction(self.dicoImg["Omega"])
         self.msgIdGame = message.id
-    
+
+        ## Added Grindframe Role 10/10/2023
+        await message.add_reaction(self.dicoImg["WF"])
 
     @commands.Cog.listener()
     async def on_raw_reaction_add(self,payload):
@@ -135,6 +143,10 @@ class CogRoleMenuG(commands.Cog):
             elif reaction == self.dicoImg["Omega"]:
                 await self.addRole(user,self.dicoRole["Omega"]) 
 
+            ## Added Grindframe Role 10/10/2023
+            elif reaction == self.dicoImg["WF"]:
+                await self.addRole(user,self.dicoRole["WF"]) 
+                
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self,payload):
         message = await self.bot.get_channel(payload.channel_id).fetch_message(payload.message_id)
@@ -166,6 +178,9 @@ class CogRoleMenuG(commands.Cog):
             elif reaction == self.dicoImg["Omega"]:
                 await self.rmvRole(user,self.dicoRole["Omega"])  
 
+            ## Added Grindframe Role 10/10/2023
+            elif reaction == self.dicoImg["WF"]:
+                await self.rmvRole(user,self.dicoRole["WF"])
                 
                 
         

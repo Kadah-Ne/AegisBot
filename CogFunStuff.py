@@ -127,7 +127,7 @@ class CogFunStuff(commands.Cog):
         listQuotes = ["Shoot for the moon! Even if you miss, you'll... something... something... stars!","You know who you remind me of? Me!","You've got a great personality!","You're doing pretty well!","You must be great -- you're hanging out with me!","You're not the ugliest person I've ever met!","NEVER limit yourself!","Hey... player...! You're really good at this game!","It's in our moments of decision that destiny is shaped!","You're -- uh -- special?","Follow your hearts... and stuff.","Don't belive in yourself, believe in me because I believe in you!"]
         e = discord.Embed(title=random.choice(listQuotes))
         e.set_thumbnail(url="https://tenor.com/view/borderlands-inspired-skill-borderlands-inspired-gif-20917083")
-        await ctx.channel.send(e)       
+        await ctx.channel.send(embed=e)       
         
     
         

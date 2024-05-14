@@ -128,7 +128,7 @@ class CogFunStuff(commands.Cog):
         listCitations = self.getCitations()
         choiceCitation = random.choice(listCitations)
         # await ctx.channel.send(f"{random.choice(listQuotes)}")       
-        await ctx.channel.send(f"{choiceCitation.content}")
+        await ctx.channel.send(f"{choiceCitation}")
         await ctx.channel.send(f"https://tenor.com/view/borderlands-inspired-skill-borderlands-inspired-gif-20917083")
 
     async def getCitations(self):

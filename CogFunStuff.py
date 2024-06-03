@@ -142,7 +142,12 @@ class CogFunStuff(commands.Cog):
         msgs = [msg async for msg in channel.history(oldest_first=False)]
         listCita = []
         for i in msgs:
-            contenue = i.content
+            if i.content.__contains__("@"):
+                cited = i.content.split(">")[0].split("@")[1]
+                userCited = get(self.bot.get_all_members(), id=cited).name
+                contenue = userCited + " " +i.content.split(">")[1]
+            else :
+                contenue = i.content
             if(i.attachments != []):
                 contenue+= f" {i.attachments[0]}"
             listCita.append(contenue)

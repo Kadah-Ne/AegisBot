@@ -140,9 +140,11 @@ class CogFunStuff(commands.Cog):
         channelId = 772904165189222410
         channel = self.bot.get_channel(channelId)
         guild = channel.guild
-        msgs = [msg async for msg in channel.history(oldest_first=False)]
+        msgs = []# msg async for msg in channel.history(oldest_first=False)
         listCita = []
-        for i in msgs:
+
+        async for i in channel.history(oldest_first=False):
+        # for i in msgs:
             # if i.content.__contains__("@"):
             #     cited = i.content.split(">")[0].split("@")[1]
             #     member = guild.get_member(cited).name

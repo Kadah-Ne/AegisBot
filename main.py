@@ -29,6 +29,7 @@ async def setup(bot,Setuper,RoleGame,Manager,Funny):
     bot.add_cog(Funny)
     
 @bot.event
+
 async def on_ready():
 
     ## 06/12/2022 Added presence

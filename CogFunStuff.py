@@ -136,29 +136,30 @@ class CogFunStuff(commands.Cog):
         else:
             await ctx.channel.send(f"https://tenor.com/view/borderlands-inspired-skill-borderlands-inspired-gif-20917083")
 
-    async def getCitations(self):
+    async def getCitations(self, year_selected: int = 0):
         channelId = 772904165189222410
         channel = self.bot.get_channel(channelId)
-        guild = channel.guild
-        msgs = []# msg async for msg in channel.history(oldest_first=False)
+        msgs = [msg async for msg in channel.history(oldest_first=False)]
         listCita = []
-
-        async for i in channel.history(oldest_first=False):
-        # for i in msgs:
+        for i in msgs:
             # if i.content.__contains__("@"):
             #     cited = i.content.split(">")[0].split("@")[1]
-            #     member = guild.get_member(cited).name
+            #     userCited = get(self.bot.get_all_members(), id=cited).name
             #     contenue = userCited + " " +i.content.split(">")[1]
             # else :
             #     contenue = i.content
-            contenue = i.content
-            if(i.attachments != []):
-                contenue+= f" {i.attachments[0]}"
-            listCita.append(contenue)
+            if i.created_at.date.year == year or year == 0:
+                contenue = i.content
+                if(i.attachments != []):
+                    contenue+= f" {i.attachments[0]}"
+                listCita.append(contenue)
         return listCita
 
-            
-
+    @commands.command (name="extract")
+    async def extract(self,ctx,year: int):
+        choiceCitations = await self.getCitations(year)
+        await ctx.channel.send(choiceCitations)
+        
         
     
         

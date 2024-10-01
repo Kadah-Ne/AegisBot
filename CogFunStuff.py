@@ -177,9 +177,4 @@ class CogFunStuff(commands.Cog):
         dict = {"authors" : listUsers,"content" : listCitatiopns}
         df = pd.DataFrame(dict)
         df.to_csv("output.csv")
-        await ctx.channel.send("output :",discord.File(file = r'output.csv'))
-        
-        
-    
-        
-s
+        await ctx.channel.send("output :",file = discord.File(r'output.csv'))

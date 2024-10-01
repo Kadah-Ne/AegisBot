@@ -23,10 +23,10 @@ bot = commands.Bot(command_prefix=Prefix,intents=intents)
 
 
 async def setup(bot,Setuper,RoleGame,Manager,Funny):
-    bot.add_cog(Setuper)
-    bot.add_cog(RoleGame)
-    bot.add_cog(Manager)
-    bot.add_cog(Funny)
+    await bot.add_cog(Setuper)
+    await bot.add_cog(RoleGame)
+    await bot.add_cog(Manager)
+    await bot.add_cog(Funny)
     
 @bot.event
 

@@ -168,10 +168,15 @@ class CogFunStuff(commands.Cog):
     @commands.command (name="extract")
     async def extract(self,ctx,year: int):
         choiceCitations = await self.getCitations(year)
-        output = ""
+        listUsers = []
+        listCitatiopns = []
         for i in choiceCitations :
-            output += i[0]+","+i[1]+"\n"
-        await ctx.channel.send(output)
+            listUsers.append(i[0])
+            listCitatiopns.append(i[1])
+        dict = {"authors" : listUsers,"content" : listCitatiopns}
+        df = pd.DataFrame(dict)
+        df.to_csv("output.csv")
+        await ctx.channel.send(file = r'output.csv')
         
         
     

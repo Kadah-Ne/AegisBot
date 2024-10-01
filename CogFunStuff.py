@@ -47,6 +47,7 @@ class CogFunStuff(commands.Cog):
                 sides = re.split("-",sides_mods,flags=re.IGNORECASE)[0]
             outputs[die] = self.rollMyDie(mod,occ,opp,sides,kh,kl)
         return(outputs)
+    #aaaa
                 
     
     def rollMyDie(self,mod,occ,item,sides,kh,kl) :

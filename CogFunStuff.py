@@ -156,9 +156,10 @@ class CogFunStuff(commands.Cog):
         return listCita
 
     @commands.command (name="extract")
-        async def extract(self,ctx,year: int):
-            choiceCitations = await self.getCitations(year)
-            await ctx.channel.send(choiceCitations)
+    async def extract(self,ctx,year: int):
+        choiceCitations = await self.getCitations(year)
+        await ctx.channel.send(choiceCitations)
+        
         
     
         

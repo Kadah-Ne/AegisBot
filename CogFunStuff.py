@@ -149,11 +149,15 @@ class CogFunStuff(commands.Cog):
             #     contenue = userCited + " " +i.content.split(">")[1]
             # else :
             #     contenue = i.content
+            
             if i.created_at.year == year_selected or year_selected == 0:
+                return(i.created_at.year)
                 contenue = i.content
                 if(i.attachments != []):
                     contenue+= f" {i.attachments[0]}"
                 listCita.append(contenue)
+            else :
+                return("nope")
         return listCita
 
     @commands.command (name="extract")

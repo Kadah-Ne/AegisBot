@@ -4,6 +4,7 @@ import re
 import random
 import discord
 import math
+from datetime import date,datetime
 
 class CogFunStuff(commands.Cog):
     def __init__(self,bot):
@@ -148,7 +149,7 @@ class CogFunStuff(commands.Cog):
             #     contenue = userCited + " " +i.content.split(">")[1]
             # else :
             #     contenue = i.content
-            if i.created_at.date.year == year or year == 0:
+            if i.created_at.year == year_selected or year_selected == 0:
                 contenue = i.content
                 if(i.attachments != []):
                     contenue+= f" {i.attachments[0]}"

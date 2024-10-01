@@ -6,6 +6,7 @@ import discord
 import math
 from datetime import date,datetime
 import pandas as pd
+import io
 
 class CogFunStuff(commands.Cog):
     def __init__(self,bot):
@@ -176,8 +177,9 @@ class CogFunStuff(commands.Cog):
         dict = {"authors" : listUsers,"content" : listCitatiopns}
         df = pd.DataFrame(dict)
         df.to_csv("output.csv")
-        await ctx.channel.send(file = r'output.csv')
+        await ctx.channel.send("output :",discord.File(file = r'output.csv'))
         
         
     
         
+s

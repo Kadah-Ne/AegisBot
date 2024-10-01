@@ -5,6 +5,7 @@ import random
 import discord
 import math
 from datetime import date,datetime
+import pandas as pd
 
 class CogFunStuff(commands.Cog):
     def __init__(self,bot):
@@ -150,17 +151,26 @@ class CogFunStuff(commands.Cog):
             # else :
             #     contenue = i.content
             
-            if i.created_at.year == year_selected or year_selected == 0:
+            if year_selected == 0:
                 contenue = i.content
                 if(i.attachments != []):
                     contenue+= f" {i.attachments[0]}"
                 listCita.append(contenue)
+            elif i.created_at.year == year_selected :
+                contenue = i.content
+                auteur = i.author
+                if(i.attachments != []):
+                    contenue+= f" {i.attachments[0]}"
+                listCita.append([auteur,contenue])
         return listCita
 
     @commands.command (name="extract")
     async def extract(self,ctx,year: int):
         choiceCitations = await self.getCitations(year)
-        await ctx.channel.send(choiceCitations)
+        dict = {"author" : choiceCitations[0],"content" :choiceCitations[1]}
+        df = pd.DataFrame(dict)
+        df.to_csv('extract.csv')
+        await ctx.channel.send(file = r'extract.csv')
         
         
     

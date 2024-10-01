@@ -162,7 +162,7 @@ class CogFunStuff(commands.Cog):
                 auteur = i.author
                 if(i.attachments != []):
                     contenue+= f" {i.attachments[0]}"
-                listCita.append([auteur,contenue])
+                listCita.append([auteur.name,contenue])
         return listCita
 
     @commands.command (name="extract")

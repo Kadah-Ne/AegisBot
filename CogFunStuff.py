@@ -167,6 +167,7 @@ class CogFunStuff(commands.Cog):
         return listCita
 
     @commands.command (name="extract")
+    @commands.has_role('Staff')
     async def extract(self,ctx,year: int):
         choiceCitations = await self.getCitations(year)
         listUsers = []

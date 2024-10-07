@@ -70,7 +70,7 @@ class CogRoleMenuG(commands.Cog):
         self.dicoImg["WF"] = self.bot.get_emoji(1161221507465355265)
 
         ## Added Altered-addict Role 7/10/2024
-        self.dicoRole["ALT"] = self.bot.get_emoji(1292922742714400892)
+        self.dicoImg["ALT"] = self.bot.get_emoji(1292922742714400892)
 
     async def RoleM(self,channelG,channelR):
         await self.setupDicoI()

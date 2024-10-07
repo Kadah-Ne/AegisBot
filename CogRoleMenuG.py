@@ -43,6 +43,9 @@ class CogRoleMenuG(commands.Cog):
         ## Added Grindframe Role 10/10/2023
         self.dicoRole["WF"] = get(self.guild.roles, name="GrindFrame")
 
+        ## Added Altered-addict Role 7/10/2024
+        self.dicoRole["ALT"] = get(self.guild.roles, name="ALTERED ADDICT")
+
     async def setupDicoI(self):
         self.dicoImg["Member"] = self.bot.get_emoji(708637710608498698)
         self.dicoImg["Event"] = self.bot.get_emoji(864745278685970452)
@@ -65,6 +68,9 @@ class CogRoleMenuG(commands.Cog):
 
         ## Added Grindframe Role 10/10/2023
         self.dicoImg["WF"] = self.bot.get_emoji(1161221507465355265)
+
+        ## Added Altered-addict Role 7/10/2024
+        self.dicoRole["ALT"] = self.bot.get_emoji(1292922742714400892)
 
     async def RoleM(self,channelG,channelR):
         await self.setupDicoI()
@@ -102,6 +108,9 @@ class CogRoleMenuG(commands.Cog):
 
         ## Added Grindframe Role 10/10/2023
         await message.add_reaction(self.dicoImg["WF"])
+
+        ## Added ALTERED ADDICT Role 10/10/2023
+        await message.add_reaction(self.dicoImg["ALT"])
 
     @commands.Cog.listener()
     async def on_raw_reaction_add(self,payload):
@@ -146,6 +155,10 @@ class CogRoleMenuG(commands.Cog):
             ## Added Grindframe Role 10/10/2023
             elif reaction == self.dicoImg["WF"]:
                 await self.addRole(user,self.dicoRole["WF"]) 
+
+            ## Added ALTERED ADDICT Role 7/10/2024
+            elif reaction == self.dicoImg["ALT"]:
+                await self.addRole(user,self.dicoRole["ALT"]) 
                 
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self,payload):
@@ -181,6 +194,10 @@ class CogRoleMenuG(commands.Cog):
             ## Added Grindframe Role 10/10/2023
             elif reaction == self.dicoImg["WF"]:
                 await self.rmvRole(user,self.dicoRole["WF"])
+            
+            ## Added ALTERED ADDICT Role 7/10/2024
+            elif reaction == self.dicoImg["WF"]:
+                await self.rmvRole(user,self.dicoRole["ALT"])
                 
                 
         

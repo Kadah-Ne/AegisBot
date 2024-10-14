@@ -1,24 +1,28 @@
 from os import name, execv, system, environ,getenv
 from sys import argv, executable, stdout
+import sqlite3
 import discord
 from discord.utils import get
 from discord.ext import commands
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from CogJoin import CogJoin
 from CogRoleMenuG import CogRoleMenuG
 from CogManage import CogManage
 from CogFunStuff import CogFunStuff
 
-load_dotenv(dotenv_path="config")
-GUILD = int(getenv("GUILD")) #Server discord par defaut
-FChannel = int(getenv("ARRIVALCHANNEL"))
-GChannel = int(getenv("GAMECHANNEL"))
-Prefix = getenv("DEFAULTPREFIX")
-# client = discord.Client()
-intents = discord.Intents.all()
-TOKEN = str(getenv("TOKENP1") + getenv("TOKENP2"))
-bot = commands.Bot(command_prefix=Prefix,intents=intents)
+#Test Enviro
+DB_File = 'C:/Users/mgouv/Desktop/DBStuff/AegisBot/config_db.db'
+DB_CON = sqlite3.connect(DB_File)
+DB_CUR = DB_CON.cursor()
 
+ID,GUILD,GChannel,Prefix = [a for a in DB_CUR.execute("SELECT * FROM GUILD_STORAGE")][0]
+TOKEN = [a for a in DB_CUR.execute("SELECT * FROM TOKEN")][0][0]
+DB_CON.close()
+
+intents = discord.Intents.all()
+
+bot = commands.Bot(command_prefix=Prefix,intents=intents)
+print(TOKEN)
 
 
 
@@ -41,9 +45,8 @@ async def on_ready():
     RoleGame = CogRoleMenuG(bot,guild,Manager)
     Funny = CogFunStuff(bot)
     await setup(bot,Setuper,RoleGame,Manager,Funny)
-    await Manager.DELETE(FChannel)
     await Manager.DELETE(GChannel)
-    await RoleGame.RoleM(bot.get_channel(GChannel),bot.get_channel(FChannel))
+    await RoleGame.RoleM(bot.get_channel(GChannel))
     await Manager.writeLogs(f"Aegis Bot a redémarré")
     print("Aegis is running")
 

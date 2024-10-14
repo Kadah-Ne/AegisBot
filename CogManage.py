@@ -3,37 +3,26 @@ from discord.utils import get
 from datetime import datetime
 from pathlib import Path
 from os import path
+import sqlite3
 import discord
 import time
 
 class CogManage(commands.Cog):
+    
     def __init__(self,bot,guild):
         self.bot = bot
         self.guild = guild
 
 
     async def writeLogs(self,message):
-        dateStr = datetime.now().strftime("%d%m%Y")
-        Chemin = Path(f"./Logs/logs-{dateStr}.txt")
-        if not Chemin.exists():
+        DB_CON,DB_CUR = self.DB_CONNECT()
 
-            logs = open(Chemin,"w")
-            logs.write(f"{time.strftime('%H:%M:%S', time.localtime())} - {message} ")
-            logs.close()
-        else:
-            logs = open(Chemin,"a+")
-            logs.write(f"\n{time.strftime('%H:%M:%S', time.localtime())} - {message}")
-            logs.close()
-
-    @commands.command (name="promote", aliases = ["Promote"])
-    @commands.has_role('Staff')
-    async def promote(self,ctx,peon : discord.Member):
-        role = get(self.guild.roles, name="Event")
-        if role in peon.roles:
-            await peon.add_roles(get(self.guild.roles, name="Random Members"))
-            await peon.remove_roles(role)
-            await self.writeLogs(f"{peon} as recevieved the role {role}")
-
+        dateNow = datetime.now().date()
+        timeNow = datetime.now().strftime("%H:%M:%S")
+        print(dateNow,timeNow)
+        DB_CUR.execute("INSERT INTO Logs (Date,Time,Text) VALUES (?,?,?)",(dateNow,timeNow,message))
+        DB_CON.commit()
+        DB_CON.close()
 
     @commands.command(name = "Purge")
     @commands.has_permissions(manage_messages=True)
@@ -54,68 +43,22 @@ class CogManage(commands.Cog):
             await i.delete()
             
 
-    @commands.command (name = "Prefix", aliases = ["prefix","p","P"])
-    @commands.has_role('Staff')
-    async def pref(self,ctx,NEWPREFIX : str = None):
-        if NEWPREFIX:
-            f = open("config","r")
-            lines = f.readlines()
-            f.close()
-            f = open("config","w")
-            for line in lines:
-                if "DEFAULTPREFIX=" not in line:
-                    f.write(line)
-            f.write("DEFAULTPREFIX="+NEWPREFIX)
-            await ctx.channel.send("Le prefix a été changer a `"+NEWPREFIX+"`")
-            await self.writeLogs(f"{ctx.author} as changed the prefix to {NEWPREFIX}")
-        else:
-            await ctx.channel.send(f"Mon prefix actuel est : `{PREFIX}`")
-
     @commands.command (name = "Logs", aliases = ["logs","Log","log"])
     @commands.has_role('Staff')
     async def showLogs(self,ctx,message : str = None):
         LogChain = ""
-        
+        DB_CON,DB_CUR = self.DB_CONNECT()
         if message == None :
-            dateStr = datetime.now().strftime("%d%m%Y")
-            date = datetime.now()
-            Chemin = Path(f"./Logs/logs-{dateStr}.txt")
-            LogChain=date.strftime("%A - %d/%m/%Y") +" :\n"
-            if Chemin.exists():
-                logs = open(Chemin)
-                lines = logs.readlines()
-                for line in lines:
-                    LogChain+= line
-                await ctx.channel.send(LogChain)
+            dateNow = datetime.now().date()
+            query = f"SELECT * FROM Logs WHERE Date = '{dateNow}'"
+            list_logs = [a for a in DB_CUR.execute(query)]
+            for log in list_logs :
+                LogChain += log[1] +'-'+log[2]+' : '+ log[3] +'\n'
+            await ctx.channel.send(LogChain)
 
-            else:
-                await ctx.channel.send(f"Aucun log pour la journée du {date.strftime('%d %B %Y')}")
-        else:
-            if message.__contains__("/"):
-                a = 1
-            elif message.__contains__("-"):
-                a = 2
-            else :
-                a = 3
-                
-            if a == 1:
-                date = datetime.strptime(message,"%d/%m/%Y")
-            elif a == 2:
-                date = datetime.strptime(message,"%d-%m-%Y")
 
-            if a !=3 :
-                dateStr = date.strftime("%d%m%Y")
-                Chemin = Path(f"./Logs/logs-{dateStr}.txt")
-                LogChain=date.strftime("%A - %d/%m/%Y" ) +" :\n"
-                if Chemin.exists():
-                    logs = open(Chemin)
-                    lines = logs.readlines()
-                    for line in lines:
-                        LogChain+= line
-                    await ctx.channel.send(LogChain)
-                else:
-                    await ctx.channel.send(f"Aucun log pour la journée du {date.strftime('%d %B %Y')}")
-            else:
-                await ctx.channel.send("Veuillez appeler cette fonction avec une date dans un des formats suivants :\n `jj mm aaaa` \n `jj-mm-aaaa` \n `jj/mm/aaaa`")
-    
-    
+    def DB_CONNECT(self) :
+        DB_FILE = 'C:/Users/mgouv/Desktop/DBStuff/AegisBot/logs_db.db'
+        DB_CON = sqlite3.connect(DB_FILE)
+        DB_CUR = DB_CON.cursor() 
+        return DB_CON,DB_CUR

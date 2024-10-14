@@ -16,15 +16,11 @@ DB_CON = sqlite3.connect(DB_File)
 DB_CUR = DB_CON.cursor()
 
 ID,GUILD,GChannel,Prefix = [a for a in DB_CUR.execute("SELECT * FROM GUILD_STORAGE")][0]
-TOKEN = [a for a in DB_CUR.execute("SELECT * FROM TOKEN")][0][0]
+TOKEN = [a for a in DB_CUR.execute("SELECT * FROM TOKEN WHERE TOKEN_NAME = 'TOKEN_TEST_EQUIP_DRONE'")][0][2]
 DB_CON.close()
 
 intents = discord.Intents.all()
-
 bot = commands.Bot(command_prefix=Prefix,intents=intents)
-print(TOKEN)
-
-
 
 async def setup(bot,Setuper,RoleGame,Manager,Funny):
     await bot.add_cog(Setuper)

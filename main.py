@@ -15,7 +15,8 @@ DB_File = 'C:/Users/mgouv/Desktop/DBStuff/AegisBot/config_db.db'
 DB_CON = sqlite3.connect(DB_File)
 DB_CUR = DB_CON.cursor()
 
-ID,GUILD,GChannel,Prefix = [a for a in DB_CUR.execute("SELECT * FROM GUILD_STORAGE")][0]
+ID,GUILD_NAME,GUILD,GChannel,Prefix = [a for a in DB_CUR.execute("SELECT * FROM GUILD_STORAGE WHERE GUILD_NAME = 'Commission_land'")][0]
+
 TOKEN = [a for a in DB_CUR.execute("SELECT * FROM TOKEN WHERE TOKEN_NAME = 'TOKEN_TEST_EQUIP_DRONE'")][0][2]
 DB_CON.close()
 
@@ -41,8 +42,8 @@ async def on_ready():
     RoleGame = CogRoleMenuG(bot,guild,Manager)
     Funny = CogFunStuff(bot)
     await setup(bot,Setuper,RoleGame,Manager,Funny)
-    await Manager.DELETE(GChannel)
-    await RoleGame.RoleM(bot.get_channel(GChannel))
+    # await Manager.DELETE(GChannel)
+    # await RoleGame.RoleM(bot.get_channel(GChannel))
     await Manager.writeLogs(f"Aegis Bot a redémarré")
     print("Aegis is running")
 

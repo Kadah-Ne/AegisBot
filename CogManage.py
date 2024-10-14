@@ -20,7 +20,7 @@ class CogManage(commands.Cog):
         dateNow = datetime.now().date()
         timeNow = datetime.now().strftime("%H:%M:%S")
         print(dateNow,timeNow)
-        DB_CUR.execute("INSERT INTO Logs (Date,Time,Text) VALUES (?,?,?)",(dateNow,timeNow,message))
+        DB_CUR.execute("INSERT INTO Logs (Date,Time,Text,GUILD_ID) VALUES (?,?,?,?)",(dateNow,timeNow,message,self.guild.id))
         DB_CON.commit()
         DB_CON.close()
 
@@ -44,13 +44,13 @@ class CogManage(commands.Cog):
             
 
     @commands.command (name = "Logs", aliases = ["logs","Log","log"])
-    @commands.has_role('Staff')
+    # @commands.has_role('Staff')
     async def showLogs(self,ctx,message : str = None):
         LogChain = ""
         DB_CON,DB_CUR = self.DB_CONNECT()
         if message == None :
             dateNow = datetime.now().date()
-            query = f"SELECT * FROM Logs WHERE Date = '{dateNow}'"
+            query = f"SELECT * FROM Logs WHERE Date = '{dateNow}' AND GUILD_ID = '{self.guild.id}'"
             list_logs = [a for a in DB_CUR.execute(query)]
             for log in list_logs :
                 LogChain += log[1] +'-'+log[2]+' : '+ log[3] +'\n'

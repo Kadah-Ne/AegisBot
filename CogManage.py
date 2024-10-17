@@ -58,7 +58,7 @@ class CogManage(commands.Cog):
 
 
     def DB_CONNECT(self) :
-        DB_FILE = 'C:/Users/mgouv/Desktop/DBStuff/AegisBot/logs_db.db'
+        DB_FILE = '/home/pi/Desktop/DBStuff/AegisBot/logs_db.db'
         DB_CON = sqlite3.connect(DB_FILE)
         DB_CUR = DB_CON.cursor() 
         return DB_CON,DB_CUR

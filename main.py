@@ -11,7 +11,7 @@ from CogManage import CogManage
 from CogFunStuff import CogFunStuff
 
 #Test Enviro
-DB_File = 'C:/Users/mgouv/Desktop/DBStuff/AegisBot/config_db.db'
+DB_File = '/home/pi/Desktop/DBStuff/AegisBot/config_db.db'
 DB_CON = sqlite3.connect(DB_File)
 DB_CUR = DB_CON.cursor()
 

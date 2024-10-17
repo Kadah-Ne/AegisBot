@@ -15,9 +15,9 @@ DB_File = '/home/pi/Desktop/DBStuff/AegisBot/config_db.db'
 DB_CON = sqlite3.connect(DB_File)
 DB_CUR = DB_CON.cursor()
 
-ID,GUILD_NAME,GUILD,GChannel,Prefix = [a for a in DB_CUR.execute("SELECT * FROM GUILD_STORAGE WHERE GUILD_NAME = 'Commission_land'")][0]
+ID,GUILD_NAME,GUILD,GChannel,Prefix = [a for a in DB_CUR.execute("SELECT * FROM GUILD_STORAGE WHERE GUILD_NAME = 'Random Flash Generation'")][0]
 
-TOKEN = [a for a in DB_CUR.execute("SELECT * FROM TOKEN WHERE TOKEN_NAME = 'TOKEN_TEST_EQUIP_DRONE'")][0][2]
+TOKEN = [a for a in DB_CUR.execute("SELECT * FROM TOKEN WHERE TOKEN_NAME = 'MAIN'")][0][2]
 DB_CON.close()
 
 intents = discord.Intents.all()

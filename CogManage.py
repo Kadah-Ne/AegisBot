@@ -56,7 +56,18 @@ class CogManage(commands.Cog):
                 LogChain += log[1] +'-'+log[2]+' : '+ log[3] +'\n'
             await ctx.channel.send(LogChain)
 
-
+    @commands.command(name = "update_arival", aliases = ["ua"])
+    @commands.has_role('Staff')
+    async def updateArival(self,ctx) :
+        DB_File = '/home/pi/Desktop/DBStuff/AegisBot/config_db.db'
+        DB_CON = sqlite3.connect(DB_File)
+        DB_CUR = DB_CON.cursor()
+        #Will need to check coll name
+        query = """UPDATE GUILD_STORAGE arival_channel = ? WHERE GUILD_NAME = 'Random Flash Generation'"""
+        DB_CUR.execute(query,ctx.channel.id)
+        DB_CON.commit()
+        DB_CON.close()
+        
     def DB_CONNECT(self) :
         DB_FILE = '/home/pi/Desktop/DBStuff/AegisBot/logs_db.db'
         DB_CON = sqlite3.connect(DB_FILE)

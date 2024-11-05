@@ -57,6 +57,7 @@ class CogManage(commands.Cog):
             await ctx.channel.send(LogChain)
 
     @commands.command(name = "update_arival", aliases = ["ua"])
+
     # @commands.has_role('Staff')
     async def updateArival(self,ctx) :
         DB_File = '/home/pi/Desktop/DBStuff/AegisBot/config_db.db'
@@ -70,7 +71,7 @@ class CogManage(commands.Cog):
         DB_CUR.execute(query)
         DB_CON.commit()
         DB_CON.close()
-
+        
     def DB_CONNECT(self) :
         DB_FILE = '/home/pi/Desktop/DBStuff/AegisBot/logs_db.db'
         # DB_FILE = 'C:/Users/mgouv/Desktop/DBStuff/AegisBot/logs_db.db'

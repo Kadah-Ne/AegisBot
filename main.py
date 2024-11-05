@@ -12,6 +12,7 @@ from CogFunStuff import CogFunStuff
 
 #Test Enviro
 DB_File = '/home/pi/Desktop/DBStuff/AegisBot/config_db.db'
+# DB_File = 'C:/Users/mgouv/Desktop/DBStuff/AegisBot/config_db.db'
 DB_CON = sqlite3.connect(DB_File)
 DB_CUR = DB_CON.cursor()
 
@@ -42,8 +43,8 @@ async def on_ready():
     RoleGame = CogRoleMenuG(bot,guild,Manager)
     Funny = CogFunStuff(bot)
     await setup(bot,Setuper,RoleGame,Manager,Funny)
-    # await Manager.DELETE(GChannel)
-    # await RoleGame.RoleM(bot.get_channel(GChannel))
+    await Manager.DELETE(GChannel)
+    await RoleGame.RoleM(bot.get_channel(GChannel))
     await Manager.writeLogs(f"Aegis Bot a redémarré")
     print("Aegis is running")
 

@@ -59,21 +59,21 @@ class CogManage(commands.Cog):
     @commands.command(name = "update_arival", aliases = ["ua"])
     # @commands.has_role('Staff')
     async def updateArival(self,ctx) :
-        DB_File = '/home/pi/Desktop/DBStuff/AegisBot/config_db.db'
-        # DB_File = 'C:/Users/mgouv/Desktop/DBStuff/AegisBot/config_db.db'
+        # DB_File = '/home/pi/Desktop/DBStuff/AegisBot/config_db.db'
+        DB_File = 'C:/Users/mgouv/Desktop/DBStuff/AegisBot/config_db.db'
         DB_CON = sqlite3.connect(DB_File)
         DB_CUR = DB_CON.cursor()
         #Will need to check coll name
-        query = f"UPDATE GUILD_STORAGE SET ROLE_CHAN_ID = '{ctx.channel.id}' WHERE GUILD_NAME =  'Random Flash Generation'"
-        # query = f"UPDATE GUILD_STORAGE SET ROLE_CHAN_ID = '{ctx.channel.id}' WHERE GUILD_NAME = 'Commission_land'"
+        # query = f"UPDATE GUILD_STORAGE SET ROLE_CHAN_ID = '{ctx.channel.id}' WHERE GUILD_NAME =  'Random Flash Generation'"
+        query = f"UPDATE GUILD_STORAGE SET ROLE_CHAN_ID = '{ctx.channel.id}' WHERE GUILD_NAME = 'Commission_land'"
         print(query)
         DB_CUR.execute(query)
         DB_CON.commit()
         DB_CON.close()
 
     def DB_CONNECT(self) :
-        DB_FILE = '/home/pi/Desktop/DBStuff/AegisBot/logs_db.db'
-        # DB_FILE = 'C:/Users/mgouv/Desktop/DBStuff/AegisBot/logs_db.db'
+        # DB_FILE = '/home/pi/Desktop/DBStuff/AegisBot/logs_db.db'
+        DB_FILE = 'C:/Users/mgouv/Desktop/DBStuff/AegisBot/logs_db.db'
         DB_CON = sqlite3.connect(DB_FILE)
         DB_CUR = DB_CON.cursor() 
         return DB_CON,DB_CUR

@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 import json 
 import spotipy 
 import webbrowser
-
+from spotipy.oauth2 import SpotifyClientCredentials
 import os
 
 class CogSpotify(commands.Cog):
@@ -17,17 +17,23 @@ class CogSpotify(commands.Cog):
         username = os.getenv("USERNAME")
         redirect_uri = 'a'
         scope = "user-read-playback-state,user-modify-playback-state"
-
-        self.sp = spotipy.Spotify(
-                auth_manager=spotipy.SpotifyOAuth(
-                client_id=client_id,
-                client_secret=client_secret,
-                redirect_uri=redirect_uri,    
-                scope=scope, open_browser=False))
+        client_credentials_manager = SpotifyClientCredentials()
+        self.sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+        # self.sp = spotipy.Spotify(
+        #         auth_manager=spotipy.SpotifyOAuth(
+        #         client_id=client_id,
+        #         client_secret=client_secret,
+        #         redirect_uri=redirect_uri,    
+        #         scope=scope, open_browser=False))
 
     
     @commands.command (name = "RequestMusic", aliases = ["RM","rm","Music","music"])
-    async def showLogs(self,ctx,* message : str):
+    async def RequestMusic(self,ctx,* message : str):
+        token_info = self.sp.auth_manager.get_access_token()
+        flag = spotipy.SpotifyOAuth.is_token_expired(token_info)
+        if(flag) :
+            self.sp.auth_manager.refresh_access_token(token_info['refresh_token'])
+            print("Refreshing Access Token.")
         message = ' '.join(message)
         results = self.sp.search(message, 1, 0, "track") 
         songs_dict = results['tracks'] 

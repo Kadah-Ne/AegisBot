@@ -1,2 +1,5 @@
 discord
 pandas
+python-dotenv
+requests
+spotipy

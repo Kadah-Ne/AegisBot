@@ -31,7 +31,7 @@ async def setup(bot,Setuper,RoleGame,Manager,Funny,Spotify):
     await bot.add_cog(RoleGame)
     await bot.add_cog(Manager)
     await bot.add_cog(Funny)
-    await bot.add_cog(Spotify)
+    # await bot.add_cog(Spotify)
     
 @bot.event
 
@@ -45,7 +45,7 @@ async def on_ready():
     Setuper = CogJoin(bot,Manager)
     RoleGame = CogRoleMenuG(bot,guild,Manager)
     Funny = CogFunStuff(bot)
-    Spotify = CogSpotify(bot)
+    # Spotify = CogSpotify(bot)
     await setup(bot,Setuper,RoleGame,Manager,Funny,Spotify)
     await Manager.DELETE(GChannel)
     await RoleGame.RoleM(bot.get_channel(GChannel))

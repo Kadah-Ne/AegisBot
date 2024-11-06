@@ -46,7 +46,7 @@ async def on_ready():
     RoleGame = CogRoleMenuG(bot,guild,Manager)
     Funny = CogFunStuff(bot)
     # Spotify = CogSpotify(bot)
-    await setup(bot,Setuper,RoleGame,Manager,Funny,Spotify)
+    await setup(bot,Setuper,RoleGame,Manager,Funny,None)
     await Manager.DELETE(GChannel)
     await RoleGame.RoleM(bot.get_channel(GChannel))
     await Manager.writeLogs(f"Aegis Bot a redémarré")

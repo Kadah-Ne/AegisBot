@@ -15,16 +15,16 @@ class CogSpotify(commands.Cog):
         client_id = os.getenv("CLIENT_ID")
         client_secret = os.getenv("CLIENT_SECRET")
         username = os.getenv("USERNAME")
-        redirect_uri = 'a'
+        redirect_uri = 'http://google.com/callback/'
         scope = "user-read-playback-state,user-modify-playback-state"
-        client_credentials_manager = SpotifyClientCredentials()
-        self.sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
-        # self.sp = spotipy.Spotify(
-        #         auth_manager=spotipy.SpotifyOAuth(
-        #         client_id=client_id,
-        #         client_secret=client_secret,
-        #         redirect_uri=redirect_uri,    
-        #         scope=scope, open_browser=False))
+        # client_credentials_manager = SpotifyClientCredentials()
+        # self.sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+        self.sp = spotipy.Spotify(
+                auth_manager=spotipy.SpotifyOAuth(
+                client_id=client_id,
+                client_secret=client_secret,
+                redirect_uri=redirect_uri,    
+                scope=scope, open_browser=False))
 
     
     @commands.command (name = "RequestMusic", aliases = ["RM","rm","Music","music"])

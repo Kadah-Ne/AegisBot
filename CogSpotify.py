@@ -107,7 +107,7 @@ class CogSpotify(commands.Cog):
             cpp+=1
             selectionOptions.append(SelectOption(label=f'{cpp} - {items['name']}',value=cpp-1)) 
         searchResult = discord.Embed(title="Seach results",description=embededTxt)
-        selectionComponent = [SelectMenu(placeholder="select an option",options=selectionOptions),Button(label="Cancel",custom_id='cancel',style=4)]
+        selectionComponent = [discord.ui.Select(placeholder="select an option",options=selectionOptions),Button(label="Cancel",custom_id='cancel',style=4)]
         sent_msg = await ctx.channel.send(embed=searchResult,components=selectionComponent)
 
         

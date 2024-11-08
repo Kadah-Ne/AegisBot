@@ -65,7 +65,7 @@ class CogSpotify(commands.Cog):
             await ctx.channel.send("Kadah ne prends pas de requetes de musique pour le moment")
 
     @commands.command (name = "ForceMusic", aliases = ["FM","fm"], brief = "force a song to play, will clear the queue")
-    async def ForceMusic(self,ctx):
+    async def ForceMusic(self,ctx,* message : str):
         if self.music_on :
             token_info = self.sp.auth_manager.get_access_token()
             flag = spotipy.SpotifyOAuth.is_token_expired(token_info)

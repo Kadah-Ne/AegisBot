@@ -96,7 +96,7 @@ class CogSpotify(commands.Cog):
         await ctx.channel.send(f'Voici la queue de kadah : \n{'\n'.join(listTracks)}')
     
     @commands.command (name = "Search", aliases = ["sm"], brief = "search a song")
-    async def Queue(self,ctx, * message : str):
+    async def search(self,ctx, * message : str):
         message = ' '.join(message)
         embededTxt = ""
 

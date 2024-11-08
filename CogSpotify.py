@@ -91,6 +91,22 @@ class CogSpotify(commands.Cog):
                 listTracks.append(items['name'])
 
         await ctx.channel.send(f'Voici la queue de kadah : \n{'\n'.join(listTracks)}')
+    
+    @commands.command (name = "Search", aliases = ["sm"], brief = "search a song")
+    async def Queue(self,ctx, * message : str):
+        message = ' '.join(message)
+        listTracks = []
+        search = self.sp.search(message,5,0,type='track')
+        
+        cpp = 0
+        for items in search['tracks']['items'] :
+            listTracks.append(f'{items['name']} | {items['artists'][0]['name']}')
+            cpp+=1 
+
+        output = ""   
+        for i in listTracks :
+            output += f":one: - {i}\n"
+        await ctx.channel.send(f"Voici le resultat de la recherche : \n{output}")
 
         
     

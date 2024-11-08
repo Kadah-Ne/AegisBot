@@ -1,5 +1,6 @@
 from discord.ext import commands
 from discord.utils import get
+from discord_components import SelectOption,Select,Button
 import discord
 from dotenv import load_dotenv
 import json 
@@ -96,20 +97,20 @@ class CogSpotify(commands.Cog):
     @commands.command (name = "Search", aliases = ["sm"], brief = "search a song")
     async def Queue(self,ctx, * message : str):
         message = ' '.join(message)
-        listTracks = {}
+        embededTxt = ""
+        listTracks = []
+        selectionOptions = []
+
         search = self.sp.search(message,5,0,type='track')
-        
         cpp = 0
         for items in search['tracks']['items'] :
-            listTracks[cpp] = (f'{items['name']} | {items['artists'][0]['name']}')
-            cpp+=1 
-
-        output = ""   
-        for i in listTracks.keys() :
-            output += f":{self.inflectEng.number_to_words(i+1)}: - {listTracks[i]}\n"
-        sent_msg = await ctx.channel.send(f"Voici le resultat de la recherche : \n{output}")
-        for i in len(listTracks):
-            await sent_msg.add_reaction(self.inflectEng.number_to_words(i+1))
+            listTracks.append(items['name'])
+            embededTxt += f"{cpp+1} - [{items['name']}]({items['artists'][0]['name']})\n"
+            cpp+=1
+            selectionOptions.append(SelectOption(label=f'{cpp} - {items['name']}',value=cpp-1)) 
+        searchResult = discord.Embed(title="Seach results",description=embededTxt)
+        selectionComponent = [Select(placeholder="select an option",options=selectionOptions),Button(label="Cancel",custom_id='cancel',style=4)]
+        sent_msg = await ctx.channel.send(embed=searchResult,components=selectionComponent)
 
         
     

@@ -4,3 +4,4 @@ python-dotenv
 requests
 spotipy
 inflect
+discord-py-interactions

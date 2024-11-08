@@ -1,6 +1,6 @@
 from discord.ext import commands
 from discord.utils import get
-from discord import SelectOption,Select,Button
+from discord import SelectOption,SelectMenu,Button
 import discord
 from dotenv import load_dotenv
 import json 
@@ -107,7 +107,7 @@ class CogSpotify(commands.Cog):
             cpp+=1
             selectionOptions.append(SelectOption(label=f'{cpp} - {items['name']}',value=cpp-1)) 
         searchResult = discord.Embed(title="Seach results",description=embededTxt)
-        selectionComponent = [Select(placeholder="select an option",options=selectionOptions),Button(label="Cancel",custom_id='cancel',style=4)]
+        selectionComponent = [SelectMenu(placeholder="select an option",options=selectionOptions),Button(label="Cancel",custom_id='cancel',style=4)]
         sent_msg = await ctx.channel.send(embed=searchResult,components=selectionComponent)
 
         

@@ -1,6 +1,6 @@
 from discord.ext import commands
 from discord.utils import get
-from discord_components import SelectOption,Select,Button
+from discord import SelectOption,Select,Button
 import discord
 from dotenv import load_dotenv
 import json 
@@ -8,13 +8,11 @@ import spotipy
 import webbrowser
 from spotipy.oauth2 import SpotifyClientCredentials
 import os
-import inflect
 
 class CogSpotify(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
         self.music_on = False
-        self.inflectEng = inflect.engine()
         self.Queue = {}
 
         load_dotenv()

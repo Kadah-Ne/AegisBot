@@ -3,5 +3,4 @@ pandas
 python-dotenv
 requests
 spotipy
-inflect
-discord-py-interactions
+discord-message-components

@@ -99,7 +99,8 @@ class CogSpotify(commands.Cog):
     async def search(self,ctx, * message : str):
         message = ' '.join(message)
         embededTxt = ""
-
+        self.searchList = []
+        self.idList = []
         search = self.sp.search(message,5,0,type='track')
         cpp = 0
         for items in search['tracks']['items'] :

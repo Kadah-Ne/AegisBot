@@ -107,7 +107,9 @@ class CogSpotify(commands.Cog):
         output = ""   
         for i in listTracks.keys() :
             output += f":{self.inflectEng.number_to_words(i+1)}: - {listTracks[i]}\n"
-        await ctx.channel.send(f"Voici le resultat de la recherche : \n{output}")
+        sent_msg = await ctx.channel.send(f"Voici le resultat de la recherche : \n{output}")
+        for i in len(listTracks):
+            await sent_msg.add_reaction(self.inflectEng.number_to_words(i+1))
 
         
     

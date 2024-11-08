@@ -125,7 +125,7 @@ class CogSpotify(commands.Cog):
         reaction = payload.emoji
         user = payload.member
         idToPlay = ""        
-        if user.id != 948628763321708554 or user.id != 916425159601180703  and message.id == self.last_Id:
+        if (user.id != 948628763321708554 and user.id != 916425159601180703)  and message.id == self.last_Id:
             match str(reaction) :
                 case str('1️⃣') :
                     idToPlay = self.idList[0]

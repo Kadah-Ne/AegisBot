@@ -81,6 +81,16 @@ class CogSpotify(commands.Cog):
         else :
             await ctx.channel.send("Kadah ne prends pas de requetes de musique pour le moment")
 
+    @commands.command (name = "Queue", aliases = ["queue"], brief = "shows the queue")
+    async def Queue(self,ctx):
+        queue = self.sp.queue()
+        listTracks = []
+        listTracks.append(queue['currently_playing']['name'])
+        for items in queue['queue'] :
+            if items['name'] not in listTracks :
+                listTracks.append(items['name'])
+
+        await ctx.channel.send(f'Voici la queue de kadah : \n{'\n'.joint(listTracks)}')
 
         
     

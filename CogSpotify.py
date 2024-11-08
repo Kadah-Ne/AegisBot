@@ -14,6 +14,9 @@ class CogSpotify(commands.Cog):
         self.bot = bot
         self.music_on = False
         self.Queue = {}
+        self.last_Id = 0
+        self.searchList = []
+        self.idList = []
 
         load_dotenv()
         client_id = os.getenv("CLIENT_ID")
@@ -96,22 +99,56 @@ class CogSpotify(commands.Cog):
     async def Queue(self,ctx, * message : str):
         message = ' '.join(message)
         embededTxt = ""
-        listTracks = []
-        selectionOptions = []
 
         search = self.sp.search(message,5,0,type='track')
         cpp = 0
         for items in search['tracks']['items'] :
-            listTracks.append(items['name'])
+            self.searchList.append(f'[{items['name']}]({items['artists'][0]['name']})')
+            self.idList.append(items['id'])
             embededTxt += f"{cpp+1} - [{items['name']}]({items['artists'][0]['name']})\n"
             cpp+=1
-            selectionOptions.append(SelectOption(label=f'{cpp} - {items['name']}',value=cpp-1)) 
         searchResult = discord.Embed(title="Seach results",description=embededTxt)
-        selectionComponent = [discord.ui.Select(placeholder="select an option",options=selectionOptions),Button(label="Cancel",custom_id='cancel',style=4)]
-        sent_msg = await ctx.channel.send(embed=searchResult,components=selectionComponent)
-
         
-    
+        sent_msg = await ctx.channel.send(embed=searchResult)
+        await sent_msg.add_reaction(str('1️⃣'))
+        await sent_msg.add_reaction('2️⃣')
+        await sent_msg.add_reaction('3️⃣')
+        await sent_msg.add_reaction('4️⃣')
+        await sent_msg.add_reaction('5️⃣')
+        await sent_msg.add_reaction('❌')
+        self.last_Id = sent_msg.id
+
+    @commands.Cog.listener()
+    async def on_raw_reaction_add(self,payload):
+        channel = self.bot.get_channel(payload.channel_id)
+        message = await self.bot.get_channel(payload.channel_id).fetch_message(payload.message_id)
+        reaction = payload.emoji
+        user = payload.member
+        idToPlay = ""        
+        if user.id != 948628763321708554 or user.id != 916425159601180703  and message.id == self.last_Id:
+            match str(reaction) :
+                case str('1️⃣') :
+                    idToPlay = self.idList[0]
+                    await channel.send(f'Vous avez choisi {self.searchList[0]}')
+                case str('2️⃣') :
+                    idToPlay = self.idList[1]
+                    await channel.send(f'Vous avez choisi {self.searchList[1]}')
+                case str('3️⃣') :
+                    idToPlay = self.idList[2]
+                    await channel.send(f'Vous avez choisi {self.searchList[2]}')
+                case str('4️⃣') :
+                    idToPlay = self.idList[3]
+                    await channel.send(f'Vous avez choisi {self.searchList[3]}')
+                case str('5️⃣') :
+                    idToPlay = self.idList[4]
+                    await channel.send(f'Vous avez choisi {self.searchList[5]}')
+                case str('❌') :
+                    idToPlay = ""
+                    await channel.send(f'Recherche annulée')
+            await message.delete()
+            if idToPlay !="":
+                self.sp.add_to_queue(uri=f'spotify:track:{idToPlay}')
+
 
         
         

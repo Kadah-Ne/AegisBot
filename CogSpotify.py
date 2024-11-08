@@ -90,7 +90,7 @@ class CogSpotify(commands.Cog):
             if items['name'] not in listTracks :
                 listTracks.append(items['name'])
 
-        await ctx.channel.send(f'Voici la queue de kadah : \n{'\n'.joint(listTracks)}')
+        await ctx.channel.send(f'Voici la queue de kadah : \n{'\n'.join(listTracks)}')
 
         
     

@@ -192,7 +192,7 @@ class CogFunStuff(commands.Cog):
         else :
             if "hein" in items :
                 await message.channel.send("**DEUX**")
-            elif "deux" in items :
+            elif "deux" in items or "de" in items:
                 await message.channel.send("**TROIS**")
             elif "trois" in items :
                 await message.channel.send("**SOLEIL**")

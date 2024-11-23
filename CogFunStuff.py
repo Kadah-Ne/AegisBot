@@ -179,3 +179,11 @@ class CogFunStuff(commands.Cog):
         df = pd.DataFrame(dict)
         df.to_csv("output.csv")
         await ctx.channel.send("output :",file = discord.File(r'output.csv'))
+
+    @commands.Cog.listener()
+    async def on_message(self,message) :
+        items = message.content.lower().split(" ")
+        if len(items) >= 4 :
+            lastItems = items[-4:]
+            if "quoi" in lastItems and random.randint(1,4) == 4:
+               await message.channel.send("FEUR")

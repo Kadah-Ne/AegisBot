@@ -97,27 +97,30 @@ class CogSpotify(commands.Cog):
     
     @commands.command (name = "Search", aliases = ["sm"], brief = "search a song")
     async def search(self,ctx, * message : str):
-        message = ' '.join(message)
-        embededTxt = ""
-        self.searchList = []
-        self.idList = []
-        search = self.sp.search(message,5,0,type='track')
-        cpp = 0
-        for items in search['tracks']['items'] :
-            self.searchList.append(f'[{items['name']}]({items['artists'][0]['name']})')
-            self.idList.append(items['id'])
-            embededTxt += f"{cpp+1} - [{items['name']}]({items['artists'][0]['name']})\n"
-            cpp+=1
-        searchResult = discord.Embed(title="Seach results",description=embededTxt)
-        
-        sent_msg = await ctx.channel.send(embed=searchResult)
-        await sent_msg.add_reaction(str('1️⃣'))
-        await sent_msg.add_reaction('2️⃣')
-        await sent_msg.add_reaction('3️⃣')
-        await sent_msg.add_reaction('4️⃣')
-        await sent_msg.add_reaction('5️⃣')
-        await sent_msg.add_reaction('❌')
-        self.last_Id = sent_msg.id
+        if self.music_on :
+            message = ' '.join(message)
+            embededTxt = ""
+            self.searchList = []
+            self.idList = []
+            search = self.sp.search(message,5,0,type='track')
+            cpp = 0
+            for items in search['tracks']['items'] :
+                self.searchList.append(f'[{items['name']}]({items['artists'][0]['name']})')
+                self.idList.append(items['id'])
+                embededTxt += f"{cpp+1} - [{items['name']}]({items['artists'][0]['name']})\n"
+                cpp+=1
+            searchResult = discord.Embed(title="Seach results",description=embededTxt)
+            
+            sent_msg = await ctx.channel.send(embed=searchResult)
+            await sent_msg.add_reaction(str('1️⃣'))
+            await sent_msg.add_reaction('2️⃣')
+            await sent_msg.add_reaction('3️⃣')
+            await sent_msg.add_reaction('4️⃣')
+            await sent_msg.add_reaction('5️⃣')
+            await sent_msg.add_reaction('❌')
+            self.last_Id = sent_msg.id
+        else :
+            await ctx.channel.send("Kadah ne prends pas de requetes de musique pour le moment")
 
     @commands.Cog.listener()
     async def on_raw_reaction_add(self,payload):

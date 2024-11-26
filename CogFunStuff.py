@@ -182,18 +182,18 @@ class CogFunStuff(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self,message) :
-        
-        items = message.content.lower().strip("*").split(" ")
-        if len(items) >= 4 :
-            lastItems = items[-4:]
-            if "quoi" in lastItems and random.randint(1,4) == 4:
-               await message.channel.send("**FEUR**")
-            elif "qué" in lastItems and random.randint(1,4) == 4 :
-                await message.channel.send("**SO**")
-        else :
-            if "hein" in items :
-                await message.channel.send("**DEUX**")
-            elif "deux" in items or "de" in items:
-                await message.channel.send("**TROIS**")
-            elif "trois" in items :
-                await message.channel.send("**SOLEIL**")
+        if message.author.id != 916425159601180703 :
+            items = message.content.lower().strip("*").split(" ")
+            if len(items) >= 4 :
+                lastItems = items[-4:]
+                if "quoi" in lastItems and random.randint(1,4) == 4:
+                    await message.channel.send("**FEUR**")
+                elif "qué" in lastItems and random.randint(1,4) == 4 :
+                    await message.channel.send("**SO**")
+            else :
+                if "hein" in items :
+                    await message.channel.send("**DEUX**")
+                elif "deux" in items or "de" in items:
+                    await message.channel.send("**TROIS**")
+                elif "trois" in items :
+                    await message.channel.send("**SOLEIL**")

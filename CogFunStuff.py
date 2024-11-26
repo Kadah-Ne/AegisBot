@@ -182,7 +182,8 @@ class CogFunStuff(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self,message) :
-        items = message.content.lower().split(" ")
+        
+        items = message.content.lower().strip("*").split(" ")
         if len(items) >= 4 :
             lastItems = items[-4:]
             if "quoi" in lastItems and random.randint(1,4) == 4:

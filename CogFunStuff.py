@@ -191,9 +191,9 @@ class CogFunStuff(commands.Cog):
                 elif "qué" in lastItems and random.randint(1,4) == 4 :
                     await message.channel.send("**SO**")
             else :
-                if "quoi" in items == 4:
+                if "quoi" in items:
                     await message.channel.send("**FEUR**")
-                elif "qué" in items == 4 :
+                elif "qué" in items :
                     await message.channel.send("**SO**")
                 if "hein" in items :
                     await message.channel.send("**DEUX**")

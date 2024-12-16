@@ -72,7 +72,7 @@ class CogRoleMenuG(commands.Cog):
         self.dicoImg["ALT"] = self.bot.get_emoji(1292922742714400892)
         
         ## Added Rivals Role 7/10/2024
-        self.dicoImg["Rivals"] = '🦹‍♂️'
+        self.dicoImg["Rivals"] = self.bot.get_emoji(1318273971317244015)
 
     async def RoleM(self,channelG):
         await self.setupDicoI()

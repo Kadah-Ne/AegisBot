@@ -46,6 +46,9 @@ class CogRoleMenuG(commands.Cog):
         ## Added Altered-addict Role 7/10/2024
         self.dicoRole["Rivals"] = get(self.guild.roles, name="Rivals")
 
+        ## Added Monster Hunter Role 04/03/2025
+        self.dicoRole["MHW"] = get(self.guild.roles, name="Monster Hunter")
+
     async def setupDicoI(self):
 
         self.dicoImg["FF"] = self.bot.get_emoji(975748447481241630)
@@ -73,6 +76,11 @@ class CogRoleMenuG(commands.Cog):
         
         ## Added Rivals Role 7/10/2024
         self.dicoImg["Rivals"] = self.bot.get_emoji(1318273971317244015)
+        
+        ## Added Monster Hunter 03/04/2025
+        self.dicoImg["MHW"] = self.bot.get_emoji(1346552749902528592)
+
+
 
     async def RoleM(self,channelG):
         await self.setupDicoI()
@@ -107,6 +115,9 @@ class CogRoleMenuG(commands.Cog):
 
         # Added Rivals Role 10/10/2023
         await message.add_reaction(self.dicoImg["Rivals"])
+
+        # Added Monster Hunter 04/03/2025
+        await message.add_reaction(self.dicoImg["MHW"])
 
         self.msgIdGame = message.id
 
@@ -153,6 +164,10 @@ class CogRoleMenuG(commands.Cog):
             ## Added RIVALS Role 7/12/2024
             elif reaction == self.dicoImg["Rivals"]:
                 await self.addRole(user,self.dicoRole["Rivals"]) 
+            
+            ## Added Monster Hunter Role 04/03/2025
+            elif reaction == self.dicoImg["MHW"]:
+                await self.addRole(user,self.dicoRole["MHW"]) 
                 
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self,payload):
@@ -196,6 +211,10 @@ class CogRoleMenuG(commands.Cog):
             ## Added Rivals Role 7/10/2024
             elif reaction == self.dicoImg["Rivals"]:
                 await self.rmvRole(user,self.dicoRole["Rivals"])
+            
+            ## Added Monster Hunter Role 04/03/2025
+            elif reaction == self.dicoImg["MHW"]:
+                await self.rmvRole(user,self.dicoRole["MHW"])
                 
                 
         

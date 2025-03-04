@@ -78,7 +78,7 @@ class CogRoleMenuG(commands.Cog):
         self.dicoImg["Rivals"] = self.bot.get_emoji(1318273971317244015)
         
         ## Added Monster Hunter 03/04/2025
-        self.dicoImg["MHW"] = self.bot.get_emoji(1346552749902528592)
+        self.dicoImg["MHW"] = self.bot.get_emoji(1346555310378061834)
 
 
 
@@ -88,7 +88,7 @@ class CogRoleMenuG(commands.Cog):
         await self.MenuG(channelG)
         
     async def MenuG(self,channel):
-        message = await channel.send(f"Réagissez pour recevoir le role adéquat :\n{self.dicoImg['LOL']} : `LOL`\n{self.dicoImg['YGO']} : `YGO`\n{self.dicoImg['APEX']} : `APEX`\n{self.dicoImg['FF']} : `FFXIV`\n{self.dicoImg['CIV']} : `CIV`\n{self.dicoImg['Valo']} : `Valorant`\n{self.dicoImg['GGST']} : `Guilty Gear`\n{self.dicoImg['Omega']} : `Omega Stiker`\n{self.dicoImg['WF']} : `Warframe`\n{self.dicoImg['ALT']} : `Altered`\n{self.dicoImg['Rivals']} : `MARVEL RIVALS`")
+        message = await channel.send(f"Réagissez pour recevoir le role adéquat :\n{self.dicoImg['LOL']} : `LOL`\n{self.dicoImg['YGO']} : `YGO`\n{self.dicoImg['APEX']} : `APEX`\n{self.dicoImg['FF']} : `FFXIV`\n{self.dicoImg['CIV']} : `CIV`\n{self.dicoImg['Valo']} : `Valorant`\n{self.dicoImg['GGST']} : `Guilty Gear`\n{self.dicoImg['Omega']} : `Omega Stiker`\n{self.dicoImg['WF']} : `Warframe`\n{self.dicoImg['ALT']} : `Altered`\n{self.dicoImg['Rivals']} : `MARVEL RIVALS`\n{self.dicoImg['MHW']} : `Monster Hunter Wilds`")
         await message.add_reaction(self.dicoImg["LOL"])
         await message.add_reaction(self.dicoImg["YGO"])
         await message.add_reaction(self.dicoImg["FF"])

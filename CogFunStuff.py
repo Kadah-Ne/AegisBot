@@ -214,10 +214,12 @@ class CogFunStuff(commands.Cog):
             if self.DiFlag :
                 items = message.content.lower()
                 findDi = items.find('di')
+                if findDi == -1:
+                  findDi = items.find('dy')  
                 if findDi != -1:
                     findDi +=2
                     newText = items[findDi::]
-                    if newText[:2] != "d "  and newText[:4] != "dn't" and not items.endswith("did") and not items.endswith("di ") and not items.endswith("di") and not items.__contains__("<:") and not items.__contains__("http"): 
+                    if newText[:2] != "d "  and newText[:4] != "dn't" and not items.endswith("did") and not items.endswith("di ") and not items.endswith("di") and not items.endswith("dy ") and not items.endswith("dy") and not items.__contains__("<:") and not items.__contains__("http"): 
                         if newText[:2].__contains__(' ') :
                             findSpa = newText.find(' ')+1
                             newText = newText[findSpa::]

@@ -206,7 +206,7 @@ class CogFunStuff(commands.Cog):
             if findDi != -1:
                 findDi +=2
                 newText = items[findDi::]
-                if newText[:2] != "d ": 
+                if newText[:2] != "d "  and newText[:4] != "dn't"and not items.endswith("did") : 
                     if newText[:2].__contains__(' ') :
                         findSpa = newText.find(' ')+1
                         newText = newText[findSpa::]

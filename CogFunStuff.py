@@ -12,6 +12,7 @@ class CogFunStuff(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
         self.listCitations = self.getCitations()
+        self.DiFlag = False
         
     def rollDie(self,dice:int) :
         return random.randint(1,dice)
@@ -105,6 +106,15 @@ class CogFunStuff(commands.Cog):
                 textchain = textchain[1:]
                 return [number,textchain]
         
+
+    @commands.command (name = "ToggleDI", aliases = ["tdi"])
+    @commands.is_owner()
+    async def ToggleDi(self,ctx) :
+        self.DiFlag = not self.DiFlag
+        if self.DiFlag :
+            await ctx.channel.send("Il est temps de dire des choses")
+        else : 
+            await ctx.channel.send("J'ai plus rien a dire")
 
     @commands.command (name="roll", aliases = ["Roll","rolls","Rolls","r","R"])
     async def roll(self,ctx,* die : str):
@@ -201,13 +211,14 @@ class CogFunStuff(commands.Cog):
                     await message.channel.send("**TROIS**")
                 elif "trois" in items :
                     await message.channel.send("**SOLEIL**")
-            items = message.content.lower()
-            findDi = items.find('di')
-            if findDi != -1:
-                findDi +=2
-                newText = items[findDi::]
-                if newText[:2] != "d "  and newText[:4] != "dn't"and not items.endswith("did") : 
-                    if newText[:2].__contains__(' ') :
-                        findSpa = newText.find(' ')+1
-                        newText = newText[findSpa::]
-                    await message.channel.send(newText)
+            if self.DiFlag :
+                items = message.content.lower()
+                findDi = items.find('di')
+                if findDi != -1:
+                    findDi +=2
+                    newText = items[findDi::]
+                    if newText[:2] != "d "  and newText[:4] != "dn't"and not items.endswith("did") : 
+                        if newText[:2].__contains__(' ') :
+                            findSpa = newText.find(' ')+1
+                            newText = newText[findSpa::]
+                        await message.channel.send(newText)

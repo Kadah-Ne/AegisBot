@@ -201,6 +201,7 @@ class CogFunStuff(commands.Cog):
                     await message.channel.send("**TROIS**")
                 elif "trois" in items :
                     await message.channel.send("**SOLEIL**")
+            items = message.content.lower()
             findDi = items.find('di')
             if findDi != -1:
                 findDi +=2

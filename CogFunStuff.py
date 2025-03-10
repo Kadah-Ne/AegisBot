@@ -201,6 +201,11 @@ class CogFunStuff(commands.Cog):
                     await message.channel.send("**TROIS**")
                 elif "trois" in items :
                     await message.channel.send("**SOLEIL**")
-        # findDi = items.find('di')
-        # if findDi != -1:
-        #     await message.channel.send(items[findDi:-1])
+        findDi = items.find('di')
+        if findDi != -1:
+            findDi +=2
+            newText = items[findDi::]
+            if newText[:2].__contains__(' ') :
+                findSpa = newText.find(' ')+1
+                newText = newText[findSpa::]
+            await message.channel.send(newText)

@@ -117,6 +117,15 @@ class CogFunStuff(commands.Cog):
                 return [number,textchain]
         
 
+    @commands.command (name = "ToggleDI", aliases = ["tdi"])
+    @commands.is_owner()
+    async def ToggleDi(self,ctx) :
+        self.DiFlag = not self.DiFlag
+        if self.DiFlag :
+            await ctx.channel.send("Il est temps de dire des choses")
+        else : 
+            await ctx.channel.send("J'ai plus rien a dire")
+
     @commands.command (name="roll", aliases = ["Roll","rolls","Rolls","r","R"])
     async def roll(self,ctx,* die : str):
         die = ''.join([str(ele) + '' for ele in die])

@@ -327,3 +327,26 @@ class CogFunStuff(commands.Cog):
                 cursor.execute("DELETE FROM curses WHERE user = ?", (user_id,))
                 conn.commit()
         conn.close()
+
+    @commands.command (name="givecurse")
+    @commands.has_role('Staff')
+    async def extract(self,ctx,discordUser: discord.User,curse: str):
+        if curse == None or curse == "":
+            curse = random.choice(list(self.cursDic.keys()))
+        if discordUser == None:
+            discordUser = ctx.author
+        if curse not in self.cursDic:
+            await ctx.channel.send(f"Le type de malédiction {curse} n'existe pas.")
+            return
+        
+        conn = sqlite3.connect("dbusers.sqlite3")
+        cursor = conn.cursor()
+        cursor.execute("SELECT curse FROM curses WHERE user = ?", (discordUser.id,))
+        result = cursor.fetchone()
+        if result:
+            await ctx.channel.send(f"{discordUser.mention} a déjà une malédiction.")
+        else:
+            now = datetime.now().isoformat(sep=' ', timespec='seconds')
+            cursor.execute("INSERT INTO curses (user, curse, date) VALUES (?, ?, ?)", (discordUser.id, curse, now))
+            conn.commit()
+            await ctx.channel.send(f"{discordUser.mention} a été maudit avec {curse} !\n{self.cursDic[curse]}")

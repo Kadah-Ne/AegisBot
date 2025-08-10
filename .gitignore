@@ -1,7 +1,7 @@
-
 /Logs/*
 ./config
 Todo
 /venv
 test.py
 *.sqlite3
+dbusers.sqlite3

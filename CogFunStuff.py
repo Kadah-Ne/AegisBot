@@ -4,14 +4,25 @@ import re
 import random
 import discord
 import math
-from datetime import date,datetime
+from datetime import datetime, timedelta
 import pandas as pd
 import io
+import requests
+import json
+import sqlite3
 
 class CogFunStuff(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
         self.listCitations = self.getCitations()
+        self.cursDic = {
+            "Cat" : "You have been catified, from now on, your messages must contain some variation of `nya (nya/h/~)` or `meow (mrow) :3` (the :3 is required)",
+            "Duck" : "You have been duckified, from now on, your messages must contain some variation of `quack (quack/qu/q)` or `quack quack (q q)`",
+            "Ojosama" : "An Ojõsan must speak in a language befitting of her station, your messages must contain `ara ara`, `fufu/fufufu/fufufufu`. You must also use the honorific -sama when addressing others.",
+            "Tsundere" : "You have to be a tsundere, your messages must contain `b-baka`, `i-it's not like i like you or anything!`, `i-it's not like i want to be with you or anything!` and `i-it's not like i want to be your girlfriend or anything!`",
+            "LolCat" : "U HAS BEEN LOLCATTD, U MUST ONLY SPEEK IN LOLCAT"
+        }
+        self.checkDB()
         
     def rollDie(self,dice:int) :
         return random.randint(1,dice)
@@ -179,11 +190,65 @@ class CogFunStuff(commands.Cog):
         df = pd.DataFrame(dict)
         df.to_csv("output.csv")
         await ctx.channel.send("output :",file = discord.File(r'output.csv'))
+        
+
+    @commands.command(name="curses_timer")
+    async def curses_timer(self, ctx):
+        conn = sqlite3.connect("dbusers.sqlite3")
+        cursor = conn.cursor()
+        cursor.execute("SELECT user, curse, date FROM curses")
+        results = cursor.fetchall()
+        conn.close()
+        if not results:
+            await ctx.send("Aucune curse n'est actuellement active.")
+            return
+        msg = "**Compte à rebours des malédictions :**\n"
+        for user_id, curse, date_str in results:
+            try:
+                curse_time = datetime.fromisoformat(date_str)
+                elapsed = datetime.now() - curse_time
+                remaining = timedelta(hours=1) - elapsed
+                if remaining.total_seconds() < 0:
+                    remaining_str = "expirée"
+                else:
+                    minutes, seconds = divmod(int(remaining.total_seconds()), 60)
+                    hours, minutes = divmod(minutes, 60)
+                    remaining_str = f"{hours}h {minutes}m {seconds}s"
+            except Exception:
+                remaining_str = "inconnue"
+            member = ctx.guild.get_member(user_id)
+            username = member.display_name if member else f"ID {user_id}"
+            msg += f"- {username} : {curse} (reste {remaining_str})\n"
+        await ctx.send(msg)
+
+    @commands.command(name="listcurses")
+    async def list_curses(self, ctx):
+        conn = sqlite3.connect("dbusers.sqlite3")
+        cursor = conn.cursor()
+        cursor.execute("SELECT user, curse, date FROM curses")
+        results = cursor.fetchall()
+        conn.close()
+        if not results:
+            await ctx.send("Aucune curse n'est actuellement active.")
+            return
+        msg = "**Liste des malédictions actives :**\n"
+        for user_id, curse, date in results:
+            member = ctx.guild.get_member(user_id)
+            username = member.display_name if member else f"ID {user_id}"
+            msg += f"- {username} : {curse} (depuis {date})\n"
+        await ctx.send(msg)
 
     @commands.Cog.listener()
     async def on_message(self,message) :
         if message.author.id != 916425159601180703 :
             items = message.content.lower().strip("*").split(" ")
+            if "aegis" in message.content.lower():
+                contexte = "Tu es Aegis, une assistante IA inspirée du personnage du jeu Persona 3. Tu réponds aux questions dans la langue où elles sont posées, en te basant sur la personnalité du personnage, sans faire référence au jeu ou à toi-même à la troisième personne."
+                question = message.content
+                response = self.ask_ollama(question, context=contexte)
+                if response:
+                    await message.channel.send(response)
+                    
             if len(items) >= 4 :
                 lastItems = items[-4:]
                 if "quoi" in lastItems and random.randint(1,4) == 4:
@@ -201,6 +266,55 @@ class CogFunStuff(commands.Cog):
                     await message.channel.send("**TROIS**")
                 elif "trois" in items :
                     await message.channel.send("**SOLEIL**")
-        # findDi = items.find('di')
-        # if findDi != -1:
-        #     await message.channel.send(items[findDi:-1])
+
+        if random.randint(1,100) == 1 and message.author.id != 916425159601180703:
+            self.remove_expired_curse(message.author.id)
+            result = await self.give_curse_if_none(message.author.id)
+            if result != 0 :
+                await message.channel.send(f"{message.author.mention}, has been cursed with {result}!\n{self.cursDic[result]}")
+    
+    def checkDB(self):
+        conn = sqlite3.connect("dbusers.sqlite3")
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT name FROM sqlite_master WHERE type='table' AND name='curses';
+        """)
+        exists = cursor.fetchone()
+        if not exists:
+            cursor.execute("""
+                CREATE TABLE curses (
+                    user INTEGER,
+                    curse TEXT,
+                    date TEXT
+                );
+            """)
+            conn.commit()
+        conn.close()
+
+    async def give_curse_if_none(self, user_id):
+        conn = sqlite3.connect("dbusers.sqlite3")
+        cursor = conn.cursor()
+        cursor.execute("SELECT curse FROM curses WHERE user = ?", (user_id,))
+        result = cursor.fetchone()
+        if not result:
+            curse = random.choice(list(self.cursDic.keys()))
+            now = datetime.now().isoformat(sep=' ', timespec='seconds')
+            cursor.execute("INSERT INTO curses (user, curse, date) VALUES (?, ?, ?)", (user_id, curse, now))
+            conn.commit()
+            conn.close()
+            return curse
+        else:
+            conn.close()
+            return 0
+        
+    async def remove_expired_curse(self, user_id):
+        conn = sqlite3.connect("dbusers.sqlite3")
+        cursor = conn.cursor()
+        cursor.execute("SELECT date FROM curses WHERE user = ?", (user_id,))
+        result = cursor.fetchone()
+        if result:
+            curse_time = datetime.fromisoformat(result[0])
+            if datetime.now() - curse_time > timedelta(hours=1):
+                cursor.execute("DELETE FROM curses WHERE user = ?", (user_id,))
+                conn.commit()
+        conn.close()

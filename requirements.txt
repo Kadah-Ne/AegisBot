@@ -4,4 +4,4 @@ python-dotenv
 requests
 spotipy
 discord-message-components
-sqlite3
+pysqlite3

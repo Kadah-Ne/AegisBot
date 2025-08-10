@@ -4,3 +4,4 @@
 Todo
 /venv
 test.py
+*.sqlite3

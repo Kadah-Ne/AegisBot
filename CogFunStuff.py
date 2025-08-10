@@ -1,4 +1,4 @@
-from discord.ext import commands
+from discord.ext import commands, tasks
 from discord.utils import get
 import re
 import random
@@ -23,7 +23,29 @@ class CogFunStuff(commands.Cog):
             "LolCat" : "U HAS BEEN LOLCATTD, U MUST ONLY SPEEK IN LOLCAT"
         }
         self.checkDB()
-        
+        self.curse_watcher.start()
+    
+    @tasks.loop(seconds=60)  # Vérifie toutes les minutes
+    async def curse_watcher(self):
+        await self.bot.wait_until_ready()
+        conn = sqlite3.connect("dbusers.sqlite3")
+        cursor = conn.cursor()
+        cursor.execute("SELECT user, curse, date FROM curses")
+        results = cursor.fetchall()
+        for user_id, curse, date_str in results:
+            try:
+                curse_time = datetime.fromisoformat(date_str)
+                if datetime.now() - curse_time > timedelta(hours=1):
+                    cursor.execute("DELETE FROM curses WHERE user = ?", (user_id,))
+                    conn.commit()
+                    # Envoie la notification dans un salon spécifique (remplace CHANNEL_ID)
+                    channel = self.bot.get_channel("708391133994287168")
+                    if channel:
+                        await channel.send(f"<@{user_id}>, ta malédiction **{curse}** est terminée !")
+            except Exception:
+                continue
+        conn.close()
+
     def rollDie(self,dice:int) :
         return random.randint(1,dice)
     
@@ -277,7 +299,6 @@ class CogFunStuff(commands.Cog):
                     await message.channel.send("**SOLEIL**")
 
         if random.randint(1,100) == 1 and message.author.id != 916425159601180703:
-            self.remove_expired_curse(message.author.id)
             result = await self.give_curse_if_none(message.author.id)
             if result != 0 :
                 await message.channel.send(f"{message.author.mention}, has been cursed with {result}!\n{self.cursDic[result]}")

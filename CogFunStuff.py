@@ -39,7 +39,7 @@ class CogFunStuff(commands.Cog):
                     cursor.execute("DELETE FROM curses WHERE user = ?", (user_id,))
                     conn.commit()
                     # Envoie la notification dans un salon spécifique (remplace CHANNEL_ID)
-                    channel = self.bot.get_channel("708391133994287168")
+                    channel = self.bot.get_channel("641353037629095976")
                     if channel:
                         await channel.send(f"<@{user_id}>, ta malédiction **{curse}** est terminée !")
             except Exception:
@@ -298,7 +298,7 @@ class CogFunStuff(commands.Cog):
                 elif "trois" in items :
                     await message.channel.send("**SOLEIL**")
 
-        if random.randint(1,100) == 1 and message.author.id != 916425159601180703:
+        if random.randint(1,100) > 15 and message.author.id != 916425159601180703:
             result = await self.give_curse_if_none(message.author.id)
             if result != 0 :
                 await message.channel.send(f"{message.author.mention}, has been cursed with {result}!\n{self.cursDic[result]}")

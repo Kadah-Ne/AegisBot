@@ -271,38 +271,39 @@ class CogFunStuff(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self,message) :
-        if message.author.id != 916425159601180703 :
-            items = message.content.lower().strip("*").split(" ")
-            if "aegis" in message.content.lower():
-                contexte = "Tu es Aegis, une assistante IA inspirée du personnage du jeu Persona 3. Tu réponds aux questions dans la langue où elles sont posées, en te basant sur la personnalité du personnage, sans faire référence au jeu ou à toi-même à la troisième personne."
-                question = message.content
-                response = self.ask_ollama(question, context=contexte)
-                if response:
-                    await message.channel.send(response)
-                    
-            if len(items) >= 4 :
-                lastItems = items[-4:]
-                if "quoi" in lastItems and random.randint(1,4) == 4:
-                    await message.channel.send("**FEUR**")
-                elif "qué" in lastItems and random.randint(1,4) == 4 :
-                    await message.channel.send("**SO**")
-            else :
-                if "quoi" in items:
-                    await message.channel.send("**FEUR**")
-                elif "qué" in items :
-                    await message.channel.send("**SO**")
-                if "hein" in items :
-                    await message.channel.send("**DEUX**")
-                elif "deux" in items or "de" in items:
-                    await message.channel.send("**TROIS**")
-                elif "trois" in items :
-                    await message.channel.send("**SOLEIL**")
+        if not message.author.bot :
+            if message.author.id != 916425159601180703 :
+                items = message.content.lower().strip("*").split(" ")
+                if "aegis" in message.content.lower():
+                    contexte = "Tu es Aegis, une assistante IA inspirée du personnage du jeu Persona 3. Tu réponds aux questions dans la langue où elles sont posées, en te basant sur la personnalité du personnage, sans faire référence au jeu ou à toi-même à la troisième personne."
+                    question = message.content
+                    response = self.ask_ollama(question, context=contexte)
+                    if response:
+                        await message.channel.send(response)
+                        
+                if len(items) >= 4 :
+                    lastItems = items[-4:]
+                    if "quoi" in lastItems and random.randint(1,4) == 4:
+                        await message.channel.send("**FEUR**")
+                    elif "qué" in lastItems and random.randint(1,4) == 4 :
+                        await message.channel.send("**SO**")
+                else :
+                    if "quoi" in items:
+                        await message.channel.send("**FEUR**")
+                    elif "qué" in items :
+                        await message.channel.send("**SO**")
+                    if "hein" in items :
+                        await message.channel.send("**DEUX**")
+                    elif "deux" in items or "de" in items:
+                        await message.channel.send("**TROIS**")
+                    elif "trois" in items :
+                        await message.channel.send("**SOLEIL**")
 
-        if random.randint(1,100) == 1 and message.author.id != 916425159601180703:
-            result = await self.give_curse_if_none(message.author.id)
-            if result != 0 :
-                await message.channel.send(f"{message.author.mention}, has been cursed with {result}!\n{self.cursDic[result]}")
-    
+            if random.randint(1,100) == 1 and message.author.id != 916425159601180703:
+                result = await self.give_curse_if_none(message.author.id)
+                if result != 0 :
+                    await message.channel.send(f"{message.author.mention}, has been cursed with {result}!\n{self.cursDic[result]}")
+        
     def checkDB(self):
         conn = sqlite3.connect("dbusers.sqlite3")
         cursor = conn.cursor()

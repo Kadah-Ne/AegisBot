@@ -352,7 +352,7 @@ class CogFunStuff(commands.Cog):
 
     @commands.command (name="givecurse")
     @commands.has_role('Staff')
-    async def extract(self,ctx,discordUser: discord.User,curse: str):
+    async def givecurse(self,ctx,discordUser: discord.User,curse: str):
         if curse == None or curse == "":
             curse = random.choice(list(self.cursDic.keys()))
         if discordUser == None:
@@ -372,3 +372,17 @@ class CogFunStuff(commands.Cog):
             cursor.execute("INSERT INTO curses (user, curse, date) VALUES (?, ?, ?)", (discordUser.id, curse, now))
             conn.commit()
             await ctx.channel.send(f"{discordUser.mention} a été maudit avec {curse} !\n{self.cursDic[curse]}")
+    
+    @commands.command (name="extract")
+    @commands.has_role('Staff')
+    async def extract(self,ctx,year: int):
+        choiceCitations = await self.getCitations(year)
+        listUsers = []
+        listCitatiopns = []
+        for i in choiceCitations :
+            listUsers.append(i[0])
+            listCitatiopns.append(i[1])
+        dict = {"authors" : listUsers,"content" : listCitatiopns}
+        df = pd.DataFrame(dict)
+        df.to_csv("output.csv")
+        await ctx.channel.send("output :",file = discord.File(r'output.csv'))

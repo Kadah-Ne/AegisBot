@@ -284,12 +284,14 @@ class CogFunStuff(commands.Cog):
                 if len(items) >= 4 :
                     lastItems = items[-4:]
                     if "quoi" in lastItems and random.randint(1,4) == 4:
-                        await message.channel.send("**FEUR**")
+                        # await message.channel.send("**FEUR**")
+                        await message.channel.send("<:KC_Feur:1450771289080856680>")
                     elif "qué" in lastItems and random.randint(1,4) == 4 :
                         await message.channel.send("**SO**")
                 else :
                     if "quoi" in items:
-                        await message.channel.send("**FEUR**")
+                        # await message.channel.send("**FEUR**")
+                        await message.channel.send("<:KC_Feur:1450771289080856680>")
                     elif "qué" in items :
                         await message.channel.send("**SO**")
                     if "hein" in items :

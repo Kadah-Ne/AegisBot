@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 import json 
 import spotipy 
 import webbrowser
-from spotipy.oauth2 import SpotifyClientCredentials
+from spotipy.oauth2 import SpotifyOAuth
 import os
 
 class CogSpotify(commands.Cog):
@@ -22,16 +22,15 @@ class CogSpotify(commands.Cog):
         client_id = os.getenv("CLIENT_ID")
         client_secret = os.getenv("CLIENT_SECRET")
         username = os.getenv("USERNAME")
-        redirect_uri = 'http://google.com/callback/'
+        redirect_uri = "http://127.0.0.1:8080/callback"
         scope = "user-read-playback-state,user-modify-playback-state"
         # client_credentials_manager = SpotifyClientCredentials()
         # self.sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
         self.sp = spotipy.Spotify(
-                auth_manager=spotipy.SpotifyOAuth(
-                client_id=client_id,
-                client_secret=client_secret,
-                redirect_uri=redirect_uri,    
-                scope=scope, open_browser=False))
+            auth_manager=SpotifyOAuth(
+            scope=scope,
+            redirect_uri=redirect_uri,
+        ))
 
     @commands.command (name = "ToggleRM", aliases = ["toggle","trm"])
     @commands.is_owner()
@@ -45,7 +44,7 @@ class CogSpotify(commands.Cog):
     @commands.command (name = "RequestMusic", aliases = ["RM","rm","Music","music"], brief = "Add a song to the queue of kadah")
     async def RequestMusic(self,ctx,* message : str):
         if self.music_on :
-            token_info = self.sp.auth_manager.get_access_token()
+            token_info = self.sp.auth_manager.get_cached_token()
             flag = spotipy.SpotifyOAuth.is_token_expired(token_info)
             if(flag) :
                 self.sp.auth_manager.refresh_access_token(token_info['refresh_token'])
@@ -70,7 +69,7 @@ class CogSpotify(commands.Cog):
     @commands.command (name = "ForceMusic", aliases = ["FM","fm"], brief = "force a song to play, will clear the queue")
     async def ForceMusic(self,ctx,* message : str):
         if self.music_on :
-            token_info = self.sp.auth_manager.get_access_token()
+            token_info = self.sp.auth_manager.get_cached_token()
             flag = spotipy.SpotifyOAuth.is_token_expired(token_info)
             if(flag) :
                 self.sp.auth_manager.refresh_access_token(token_info['refresh_token'])
